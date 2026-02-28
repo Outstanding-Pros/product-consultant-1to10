@@ -33,6 +33,35 @@ body {
 .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 .section { padding: 100px 0; position: relative; }
 
+.lang-switcher {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  display: inline-flex;
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(17, 17, 22, 0.85);
+  backdrop-filter: blur(8px);
+}
+.lang-switcher a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+.lang-switcher a.active {
+  color: var(--bg-primary);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
 .section-label {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -517,6 +546,9 @@ body::before {
   color: var(--text-muted);
   font-style: italic;
 }
+[data-locale='en'] .rx-blur::after {
+  content: 'Unlock the full report after checkout';
+}
 
 /* ═══ TRUST / FOUNDER ═══ */
 .trust-section {
@@ -663,6 +695,9 @@ body::before {
   font-weight: 700;
   padding: 4px 14px;
   border-radius: 6px;
+}
+[data-locale='en'] .pricing-card.featured::before {
+  content: 'Recommended';
 }
 .pricing-tier {
   font-size: 13px;
