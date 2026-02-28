@@ -3,10 +3,10 @@ export default function Hero() {
     <section className="hero">
       <div className="container">
         <div className="hero-content">
-          <span className="hero-eyebrow">FOR INDIE APP MAKERS</span>
+          <span className="hero-eyebrow">前 PO 출신 기획자의 맞춤형 수익화 컨설팅</span>
           <h1>
             유저는 오는데,<br />수익이 안 따라오시죠?
-            <span className="line-accent">맞춤형 수익화 처방전</span>
+            <span className="line-accent">CoPO가 해결합니다</span>
           </h1>
           <p className="hero-sub">
             강의 듣고, 커뮤니티 물어봐도 안 풀리던 이유 —<br />

@@ -18,7 +18,7 @@ export default function ComparisonSection() {
                 <th></th>
                 <th>강의 / 유튜브</th>
                 <th>커뮤니티</th>
-                <th>앱 수익 처방전</th>
+                <th>CoPO</th>
               </tr>
             </thead>
             <tbody>

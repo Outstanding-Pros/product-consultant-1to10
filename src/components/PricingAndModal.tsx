@@ -35,7 +35,7 @@ export default function PricingAndModal() {
     e.preventDefault()
     setIsSubmitting(true)
     setTimeout(() => {
-      alert('감사합니다! 결제 페이지로 이동합니다.\n\n(실제로는 토스페이먼츠 결제 페이지로 연결됩니다)')
+      alert('감사합니다! 결제 페이지로 이동합니다.\n\n(Polar.sh 결제 페이지로 연결됩니다)')
       setIsSubmitting(false)
     }, 1000)
   }

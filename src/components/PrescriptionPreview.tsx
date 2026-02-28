@@ -11,7 +11,7 @@ export default function PrescriptionPreview() {
           <div className="prescription-mock rx-blur">
             <div className="rx-header">
               <span className="rx-logo">💊</span>
-              <span className="rx-title">앱 수익 처방전 — 진단 결과</span>
+              <span className="rx-title">CoPO — 진단 결과</span>
             </div>
             <div className="rx-meta">
               <div className="rx-meta-item">
