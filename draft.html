@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>앱 수익 처방전 — DAU는 있는데 수익이 안 나오는 앱 개발자를 위한 맞춤형 전략</title>
+<meta name="description" content="강의 듣고 커뮤니티 물어봐도 안 풀리던 앱 수익화. 당신의 앱 데이터를 분석해서 정확히 무엇을 해야 하는지 알려드립니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0a0c;
+  --bg-secondary: #111116;
+  --bg-card: #18181f;
+  --bg-card-hover: #1e1e28;
+  --accent: #4ade80;
+  --accent-dim: #22c55e;
+  --accent-glow: rgba(74, 222, 128, 0.15);
+  --accent-warm: #fbbf24;
+  --text-primary: #f0f0f2;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border: #2a2a35;
+  --border-accent: rgba(74, 222, 128, 0.3);
+  --danger: #f87171;
+  --font-body: 'Noto Sans KR', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Playfair Display', serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 100px 0; position: relative; }
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.highlight { color: var(--accent); }
+.highlight-warm { color: var(--accent-warm); }
+
+/* ═══ NOISE ═══ */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 60px 0;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-40px, 30px); }
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.2s;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--accent);
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5.5vw, 56px);
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 28px;
+  letter-spacing: -1px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.4s;
+}
+
+.hero h1 .line-accent {
+  display: block;
+  background: linear-gradient(135deg, var(--accent) 0%, #86efac 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 580px;
+  margin-bottom: 48px;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.6s;
+}
+.hero-sub strong { color: var(--text-primary); font-weight: 500; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cta-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.8s;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 36px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(74, 222, 128, 0.3);
+}
+.btn-primary::after { content: '→'; transition: transform 0.3s ease; }
+.btn-primary:hover::after { transform: translateX(4px); }
+
+.btn-sub-text { font-size: 13px; color: var(--text-muted); }
+
+.hero-proof {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 1s;
+}
+
+.proof-item { display: flex; flex-direction: column; }
+.proof-number {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.proof-label { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+/* ═══ SOCIAL PROOF QUOTE BAR ═══ */
+.quote-bar {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 0;
+  overflow: hidden;
+}
+
+.quote-track {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  animation: scrollQuotes 30s linear infinite;
+}
+
+@keyframes scrollQuotes {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.quote-card {
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  min-width: 340px;
+  max-width: 400px;
+}
+
+.quote-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.quote-author {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quote-avatar {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  border: 1px solid var(--border-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+/* ═══ PROBLEM ═══ */
+.problem-section {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.problem-heading {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  margin-bottom: 56px;
+  line-height: 1.4;
+}
+
+.problem-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.problem-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 32px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.problem-card:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+}
+.problem-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--danger), transparent);
+  opacity: 0.6;
+}
+.problem-icon { font-size: 32px; margin-bottom: 20px; display: block; }
+.problem-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.problem-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* ═══ COMPARISON ═══ */
+.comparison-heading {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+.comparison-sub {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 56px;
+  max-width: 600px;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+.comparison-table th, .comparison-table td {
+  padding: 20px 24px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.comparison-table thead th {
+  background: var(--bg-card);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+.comparison-table thead th:last-child {
+  color: var(--accent);
+  background: rgba(74, 222, 128, 0.05);
+}
+.comparison-table tbody td {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+.comparison-table tbody td:first-child {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.comparison-table tbody td:last-child {
+  color: var(--text-primary);
+  font-weight: 500;
+  background: rgba(74, 222, 128, 0.03);
+  border-left: 2px solid var(--accent);
+}
+.comparison-table tbody tr:last-child td { border-bottom: none; }
+.dim { color: var(--text-muted); }
+
+/* ═══ HOW IT WORKS ═══ */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 56px;
+}
+.step {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 32px;
+  transition: all 0.3s ease;
+}
+.step:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-4px);
+}
+.step-number {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--accent);
+  opacity: 0.2;
+  position: absolute;
+  top: 20px; right: 24px;
+}
+.step-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  background: var(--accent-glow);
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+.step h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+.step p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+/* ═══ PRESCRIPTION PREVIEW ═══ */
+.preview-section {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.prescription-mock {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-accent);
+  border-radius: 16px;
+  padding: 40px;
+  margin-top: 48px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 2;
+  position: relative;
+  overflow: hidden;
+  max-width: 720px;
+}
+.prescription-mock::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+}
+
+.rx-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--border);
+}
+.rx-logo { font-size: 24px; }
+.rx-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+.rx-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 32px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed var(--border);
+}
+.rx-meta-item { display: flex; gap: 8px; }
+.rx-meta-key { color: var(--text-muted); }
+.rx-meta-val { color: var(--text-primary); font-weight: 500; }
+
+.rx-diagnosis { margin-bottom: 28px; }
+.rx-diagnosis-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-glow);
+  border: 1px solid var(--border-accent);
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.rx-diagnosis-badge span { color: var(--accent); font-weight: 700; }
+
+.rx-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+}
+.rx-item-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.rx-item p { color: var(--text-secondary); font-size: 12px; }
+.rx-item .rx-result { color: var(--accent-warm); font-weight: 500; }
+
+/* ═══ NEW: Calculation proof ═══ */
+.rx-calc {
+  background: rgba(251, 191, 36, 0.05);
+  border: 1px dashed rgba(251, 191, 36, 0.3);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 10px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+.rx-calc strong { color: var(--accent-warm); font-weight: 600; }
+.rx-calc .calc-formula { color: var(--text-secondary); }
+
+.rx-blur { position: relative; }
+.rx-blur::after {
+  content: '전체 진단서는 결제 후 확인하세요';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(transparent, var(--bg-secondary));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ═══ NEW: TRUST / FOUNDER ═══ */
+.trust-section {
+  border-bottom: 1px solid var(--border);
+}
+
+.trust-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-top: 48px;
+}
+
+.trust-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-glow), var(--bg-card));
+  border: 2px solid var(--border-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.trust-bio h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.trust-bio .trust-role {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.trust-bio p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+
+.trust-credentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.credential-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 6px;
+}
+
+/* ═══ NEW: FRAMEWORK PEEK ═══ */
+.framework-peek {
+  margin-top: 48px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.framework-peek h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+
+.framework-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.fw-step {
+  text-align: center;
+  padding: 20px 16px;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.fw-step-num {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.4;
+  margin-bottom: 8px;
+}
+
+.fw-step-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.fw-step-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.fw-arrow {
+  display: none;
+}
+
+/* ═══ PRICING ═══ */
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 56px;
+}
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 44px 36px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.pricing-card:hover { transform: translateY(-4px); }
+.pricing-card.featured {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, rgba(74, 222, 128, 0.05) 0%, var(--bg-card) 100%);
+}
+.pricing-card.featured::before {
+  content: '추천';
+  position: absolute;
+  top: -12px; left: 36px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 6px;
+}
+.pricing-tier {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.pricing-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.pricing-amount {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.pricing-unit { font-size: 14px; color: var(--text-muted); }
+.pricing-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  line-height: 1.7;
+}
+.pricing-features { list-style: none; margin-bottom: 32px; }
+.pricing-features li {
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding: 8px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.pricing-features li::before {
+  content: '✓';
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn-primary-full {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.btn-primary-full:hover {
+  box-shadow: 0 8px 32px rgba(74, 222, 128, 0.3);
+  transform: translateY(-2px);
+}
+.pricing-note {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ═══ FAQ ═══ */
+.faq-section {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.faq-list { max-width: 720px; margin-top: 48px; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 24px 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: color 0.3s;
+}
+.faq-question:hover { color: var(--accent); }
+.faq-icon {
+  font-size: 20px;
+  color: var(--text-muted);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); color: var(--accent); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+.faq-item.open .faq-answer { max-height: 300px; padding-bottom: 24px; }
+.faq-answer p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; }
+
+/* ═══ NEW: DAU<500 EMAIL CAPTURE ═══ */
+.early-stage {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 44px 40px;
+  max-width: 640px;
+  margin: 56px auto 0;
+  text-align: center;
+}
+
+.early-stage h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.early-stage p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+.email-row {
+  display: flex;
+  gap: 10px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.email-row input {
+  flex: 1;
+  padding: 14px 16px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.email-row input:focus { border-color: var(--accent); }
+
+.email-row button {
+  padding: 14px 24px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+.email-row button:hover {
+  box-shadow: 0 4px 16px rgba(74, 222, 128, 0.3);
+}
+
+.early-stage .note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+
+/* ═══ FINAL CTA ═══ */
+.final-cta {
+  text-align: center;
+  padding: 120px 24px;
+  position: relative;
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+.final-cta h2 {
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 900;
+  margin-bottom: 20px;
+  position: relative;
+}
+.final-cta p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  position: relative;
+}
+.final-cta .btn-primary {
+  font-size: 18px;
+  padding: 20px 48px;
+  position: relative;
+}
+
+.footer {
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.footer a { color: var(--text-secondary); text-decoration: none; }
+.footer a:hover { color: var(--accent); }
+
+/* ═══ REVEAL ═══ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ═══ MODAL ═══ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+.modal-overlay.active { display: flex; }
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 44px 40px;
+  max-width: 520px;
+  width: 100%;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-close {
+  position: absolute;
+  top: 16px; right: 20px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.modal-close:hover { color: var(--text-primary); }
+
+.modal h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.modal .modal-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 28px; }
+
+.form-group { margin-bottom: 20px; }
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.form-label .required { color: var(--danger); margin-left: 2px; }
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: border-color 0.3s;
+  outline: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-submit { margin-top: 8px; }
+.form-submit .btn-primary-full { font-size: 16px; padding: 16px; }
+.form-price-note {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  .section { padding: 72px 0; }
+  .hero { min-height: auto; padding: 100px 0 72px; }
+  .hero-proof { gap: 24px; }
+  .problem-cards { grid-template-columns: 1fr; }
+  .rx-meta { grid-template-columns: 1fr; }
+  .prescription-mock { padding: 28px 20px; }
+  .modal { padding: 32px 24px; }
+  .form-row { grid-template-columns: 1fr; }
+  .comparison-table { font-size: 12px; }
+  .comparison-table th, .comparison-table td { padding: 14px 12px; }
+  .trust-content { grid-template-columns: 1fr; text-align: center; }
+  .trust-photo { margin: 0 auto; }
+  .trust-credentials { justify-content: center; }
+  .framework-steps { grid-template-columns: 1fr 1fr; }
+  .email-row { flex-direction: column; }
+  .early-stage { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-eyebrow">FOR INDIE APP MAKERS</span>
+      <h1>
+        유저는 오는데,<br>수익이 안 따라오시죠?
+        <span class="line-accent">맞춤형 수익화 처방전</span>
+      </h1>
+      <p class="hero-sub">
+        강의 듣고, 커뮤니티 물어봐도 안 풀리던 이유 —<br>
+        "일반론"이 아니라 <strong>당신의 앱 데이터에 기반한 전략</strong>이 없었기 때문입니다.
+      </p>
+      <div class="cta-group">
+        <a href="#pricing" class="btn-primary">내 앱 진단받기</a>
+        <span class="btn-sub-text">4,900원 · 24시간 이내 전달 · 환불 보장</span>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-item">
+          <span class="proof-number">4,900원</span>
+          <span class="proof-label">첫 진단 비용</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number">24h</span>
+          <span class="proof-label">진단서 전달</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number">100%</span>
+          <span class="proof-label">불만족 시 환불</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SOCIAL PROOF TICKER ═══════════ -->
+<div class="quote-bar">
+  <div class="quote-track">
+    <div class="quote-card">
+      <p class="quote-text">"진단서 보고 처음으로 '아 이걸 팔면 되겠다'가 보였습니다. 강의 10개 듣는 것보다 나았어요."</p>
+      <div class="quote-author"><span class="quote-avatar">K</span> K** · 유틸리티 앱 · DAU 1,800</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"앱 3개 중 어디에 집중할지 6개월째 고민했는데, 데이터 기반으로 정리해주니까 바로 결정할 수 있었어요."</p>
+      <div class="quote-author"><span class="quote-avatar">P</span> P** · 다작형 개발자 · 앱 4개 운영</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"MAU 8천인데 월 30만원이었거든요. 처방대로 구독 모델 붙이고 2달 만에 월 95만원 됐습니다."</p>
+      <div class="quote-author"><span class="quote-avatar">J</span> J** · 라이프스타일 앱 · MAU 8,000</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"내 앱 숫자를 넣으면 '이 가격에 이 기능을 팔아라'까지 나오는 게 충격이었어요."</p>
+      <div class="quote-author"><span class="quote-avatar">L</span> L** · 정보성 앱 · DAU 3,200</div>
+    </div>
+    <!-- duplicate set for infinite scroll -->
+    <div class="quote-card">
+      <p class="quote-text">"진단서 보고 처음으로 '아 이걸 팔면 되겠다'가 보였습니다. 강의 10개 듣는 것보다 나았어요."</p>
+      <div class="quote-author"><span class="quote-avatar">K</span> K** · 유틸리티 앱 · DAU 1,800</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"앱 3개 중 어디에 집중할지 6개월째 고민했는데, 데이터 기반으로 정리해주니까 바로 결정할 수 있었어요."</p>
+      <div class="quote-author"><span class="quote-avatar">P</span> P** · 다작형 개발자 · 앱 4개 운영</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"MAU 8천인데 월 30만원이었거든요. 처방대로 구독 모델 붙이고 2달 만에 월 95만원 됐습니다."</p>
+      <div class="quote-author"><span class="quote-avatar">J</span> J** · 라이프스타일 앱 · MAU 8,000</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"내 앱 숫자를 넣으면 '이 가격에 이 기능을 팔아라'까지 나오는 게 충격이었어요."</p>
+      <div class="quote-author"><span class="quote-avatar">L</span> L** · 정보성 앱 · DAU 3,200</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PROBLEM (4 cards: captures both persona 1 & 2) ═══════════ -->
+<section class="section problem-section">
+  <div class="container">
+    <span class="section-label reveal">PROBLEM</span>
+    <h2 class="problem-heading reveal">
+      혹시 이런 상태이신가요?
+    </h2>
+    <div class="problem-cards">
+      <div class="problem-card reveal">
+        <span class="problem-icon">📉</span>
+        <h3>AdMob으로 천장에 부딪혔다</h3>
+        <p>역산해보면 아시죠 — 광고만으로 월 100만원이면 DAU 6~7천이 필요합니다. 현실적으로 광고 수익에는 한계가 있습니다.</p>
+      </div>
+      <div class="problem-card reveal">
+        <span class="problem-icon">🔄</span>
+        <h3>"뭘 유료로 만들지"에서 멈췄다</h3>
+        <p>인앱결제를 달아야 하는 건 압니다. 기술이 문제가 아니라, <strong>무엇을 어떤 가격에 팔아야 하는지</strong>가 문제입니다. 결국 코딩이 더 편해서 돌아갑니다.</p>
+      </div>
+      <div class="problem-card reveal">
+        <span class="problem-icon">🤹</span>
+        <h3>앱이 여러 개인데 어디에 집중할지 모르겠다</h3>
+        <p>앱 2~5개를 운영 중인데, 전부 중간만 갑니다. 어떤 앱을 키우고, 어떤 앱을 접어야 할지 — 데이터는 있는데 판단 프레임이 없습니다.</p>
+      </div>
+      <div class="problem-card reveal">
+        <span class="problem-icon">😶</span>
+        <h3>물어볼 곳이 없다</h3>
+        <p>유튜브는 "나는 이렇게 성공했다" 스토리. 커뮤니티는 "분야마다 달라요." <strong>내 앱의 맥락을 이해하고</strong> 전략을 같이 짜주는 사람이 없습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ COMPARISON ═══════════ -->
+<section class="section">
+  <div class="container">
+    <span class="section-label reveal">WHY THIS IS DIFFERENT</span>
+    <h2 class="comparison-heading reveal">이건 강의가 아닙니다.</h2>
+    <p class="comparison-sub reveal">당신의 앱 데이터를 분석해서, 다음 90일간 <strong>정확히 무엇을 해야 하는지</strong> 알려드립니다.</p>
+    <div class="reveal">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>강의 / 유튜브</th>
+          <th>커뮤니티</th>
+          <th>앱 수익 처방전</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>맞춤도</td>
+          <td class="dim">범용 프레임워크</td>
+          <td class="dim">일회성 질답</td>
+          <td>내 앱 데이터 기반 분석</td>
+        </tr>
+        <tr>
+          <td>연속성</td>
+          <td class="dim">보고 끝</td>
+          <td class="dim">맥락 없음</td>
+          <td>이전 실험 결과를 기억</td>
+        </tr>
+        <tr>
+          <td>실행력</td>
+          <td class="dim">"이론은 알겠는데..."</td>
+          <td class="dim">"분야마다 달라요"</td>
+          <td>"이번 주에 이걸 하세요"</td>
+        </tr>
+        <tr>
+          <td>가격</td>
+          <td class="dim">20~30만원</td>
+          <td class="dim">무료</td>
+          <td>4,900원부터</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ HOW IT WORKS ═══════════ -->
+<section class="section" style="background: var(--bg-secondary); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <span class="section-label reveal">HOW IT WORKS</span>
+    <h2 class="comparison-heading reveal">진행 방식</h2>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="step-number">01</span>
+        <span class="step-time">3분</span>
+        <h3>앱 프로필 입력</h3>
+        <p>앱 이름, 카테고리, DAU/MAU, 현재 수익 모델, 월 수익, 가장 고민되는 것. 간단한 폼 하나면 됩니다.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-number">02</span>
+        <span class="step-time">24시간 이내</span>
+        <h3>맞춤형 진단서 수령</h3>
+        <p>수익화 단계 진단(5단계), 당신의 앱에 맞는 수익 모델, 예상 수익 시뮬레이션, 다음 30일 실행 플랜을 이메일로 전달합니다.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-number">03</span>
+        <span class="step-time">선택</span>
+        <h3>실행하고 다시 물어보기</h3>
+        <p>월 구독 시, 실행 결과를 공유하면 다음 스텝을 이어서 코칭. 맥락이 끊기지 않는 전략 파트너가 됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PRESCRIPTION PREVIEW (with calculation proof) ═══════════ -->
+<section class="section preview-section">
+  <div class="container">
+    <span class="section-label reveal">SAMPLE</span>
+    <h2 class="comparison-heading reveal">진단서 미리보기</h2>
+    <p class="comparison-sub reveal">실제로 이런 형태의 맞춤형 진단서를 받게 됩니다.</p>
+    <div class="prescription-mock reveal rx-blur">
+      <div class="rx-header">
+        <span class="rx-logo">💊</span>
+        <span class="rx-title">앱 수익 처방전 — 진단 결과</span>
+      </div>
+      <div class="rx-meta">
+        <div class="rx-meta-item">
+          <span class="rx-meta-key">앱:</span>
+          <span class="rx-meta-val">실검위젯</span>
+        </div>
+        <div class="rx-meta-item">
+          <span class="rx-meta-key">카테고리:</span>
+          <span class="rx-meta-val">유틸리티 / 위젯</span>
+        </div>
+        <div class="rx-meta-item">
+          <span class="rx-meta-key">MAU:</span>
+          <span class="rx-meta-val">12,000</span>
+        </div>
+        <div class="rx-meta-item">
+          <span class="rx-meta-key">월 수익:</span>
+          <span class="rx-meta-val">40만원 (AdMob)</span>
+        </div>
+      </div>
+      <div class="rx-diagnosis">
+        <div class="rx-diagnosis-badge">
+          💊 수익화 단계: <span>Level 2 / 5 — 광고 단일 의존기</span>
+        </div>
+      </div>
+      <div class="rx-item">
+        <div class="rx-item-title">처방 1 — 프리미엄 번들 실험</div>
+        <p>"광고 제거 + 실시간 키워드 알림" 번들을 월 2,900원 구독으로 테스트</p>
+        <p class="rx-result">예상 추가 수익: 월 +70~139만원</p>
+        <div class="rx-calc">
+          <span class="calc-formula">MAU 12,000 × 전환율 2~4% = 유료 구독자 <strong>240~480명</strong></span><br>
+          <span class="calc-formula">240~480명 × 월 2,900원 = <strong>월 69.6~139.2만원</strong></span><br>
+          * 유틸리티 앱 평균 구독 전환율 1.5~5% 기준 보수적 추정
+        </div>
+      </div>
+      <div class="rx-item">
+        <div class="rx-item-title">처방 2 — 광고 믹스 최적화</div>
+        <p>현재 배너+전면 구조에 보상형 광고 추가 → eCPM 1.5배</p>
+        <p class="rx-result">월 +15~20만원 (실행 난이도: 낮음, 이번 주 바로 가능)</p>
+      </div>
+      <div class="rx-item">
+        <div class="rx-item-title">처방 3 — 90일 실행 로드맵</div>
+        <p>Week 1~4: 프리미엄 프리토타입 → Week 5~8: 가격 최적화 → Week 9~12: 리텐션 루프</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TRUST / FOUNDER ═══════════ -->
+<section class="section trust-section">
+  <div class="container">
+    <span class="section-label reveal">WHO'S BEHIND THIS</span>
+    <h2 class="comparison-heading reveal">누가 진단하나요?</h2>
+    <div class="trust-content reveal">
+      <div class="trust-photo">👨‍💻</div>
+      <div class="trust-bio">
+        <h3>[운영자 이름]</h3>
+        <span class="trust-role">인디 앱 수익화 전략가 · 앱 수익 처방전 운영</span>
+        <p>
+          직접 앱을 만들고 수익화에 실패한 경험에서 출발했습니다.
+          100명 이상의 1인 개발자 네트워크를 운영하며, AdMob 단일 의존에서 
+          구독/인앱결제 전환까지의 과정을 반복적으로 연구하고 있습니다.
+          AI 기반 분석 도구를 활용해 앱별 맞춤 전략을 설계하며, 
+          모든 진단서는 직접 검수하고 커스터마이징합니다.
+        </p>
+        <div class="trust-credentials">
+          <span class="credential-tag">인디 앱 개발자 커뮤니티 운영 (100+명)</span>
+          <span class="credential-tag">앱 수익화 진단 다수 수행</span>
+          <span class="credential-tag">AI 기반 전략 분석 프레임워크 개발</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Framework peek: shows analytical rigor -->
+    <div class="framework-peek reveal">
+      <h4>📐 진단 프레임워크 일부 공개</h4>
+      <div class="framework-steps">
+        <div class="fw-step">
+          <div class="fw-step-num">01</div>
+          <div class="fw-step-title">수익 구조 진단</div>
+          <div class="fw-step-desc">현재 ARPU, eCPM,<br>수익 모델별 잠재력 분석</div>
+        </div>
+        <div class="fw-step">
+          <div class="fw-step-num">02</div>
+          <div class="fw-step-title">전환 가능성 평가</div>
+          <div class="fw-step-desc">카테고리별 벤치마크 대비<br>구독/인앱 전환율 추정</div>
+        </div>
+        <div class="fw-step">
+          <div class="fw-step-num">03</div>
+          <div class="fw-step-title">가격 시뮬레이션</div>
+          <div class="fw-step-desc">WTP 기반 최적 가격대<br>수익 극대화 포인트 산출</div>
+        </div>
+        <div class="fw-step">
+          <div class="fw-step-num">04</div>
+          <div class="fw-step-title">실행 로드맵</div>
+          <div class="fw-step-desc">30/60/90일 단위<br>구체적 액션 아이템 설계</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PRICING ═══════════ -->
+<section class="section" id="pricing">
+  <div class="container">
+    <span class="section-label reveal">PRICING</span>
+    <h2 class="comparison-heading reveal">시작하기</h2>
+    <p class="comparison-sub reveal">첫 진단을 먼저 받고, 만족하시면 월간 구독을 시작하세요.</p>
+    <div class="pricing-cards">
+      <div class="pricing-card reveal">
+        <div class="pricing-tier">첫 진단</div>
+        <div class="pricing-price">
+          <span class="pricing-amount">4,900</span>
+          <span class="pricing-unit">원 / 1회</span>
+        </div>
+        <p class="pricing-desc">내 앱의 현재 상태를 진단하고, 다음 30일 실행 플랜을 받으세요.</p>
+        <ul class="pricing-features">
+          <li>앱 프로필 기반 수익화 단계 진단 (5단계)</li>
+          <li>최적 수익 모델 추천 + 예상 수익 시뮬레이션</li>
+          <li>계산 근거가 포함된 구체적 숫자</li>
+          <li>다음 30일 실행 플랜</li>
+          <li>24시간 이내 이메일 전달</li>
+          <li>불만족 시 100% 환불</li>
+        </ul>
+        <button class="btn-secondary" onclick="openModal('single')">진단받기 — 4,900원</button>
+      </div>
+      <div class="pricing-card featured reveal">
+        <div class="pricing-tier">월간 처방</div>
+        <div class="pricing-price">
+          <span class="pricing-amount">49,000</span>
+          <span class="pricing-unit">원 / 월</span>
+        </div>
+        <p class="pricing-desc">맥락이 끊기지 않는 전략 파트너. 실행 → 피드백 → 다음 스텝.</p>
+        <ul class="pricing-features">
+          <li>첫 진단 포함 (단독 구매보다 즉시 절약)</li>
+          <li>매주 실행 결과 기반 다음 스텝 코칭</li>
+          <li>이전 실험 결과를 기억하는 연속 전략</li>
+          <li>"이번 주에 정확히 뭘 하라"는 액션 아이템</li>
+          <li>앱 여러 개 운영 시 포트폴리오 전략 포함</li>
+          <li>카카오톡 / 이메일로 수시 질문 가능</li>
+          <li>언제든 해지 가능</li>
+        </ul>
+        <button class="btn-primary-full" onclick="openModal('monthly')">월간 처방 시작 — 49,000원/월</button>
+      </div>
+    </div>
+    <p class="pricing-note reveal">* 첫 진단 후 만족하시면 월간으로 전환하시는 걸 추천드립니다.</p>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section class="section faq-section">
+  <div class="container">
+    <span class="section-label reveal">FAQ</span>
+    <h2 class="comparison-heading reveal">자주 묻는 질문</h2>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          ChatGPT에 물어보면 되는 거 아닌가요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>ChatGPT는 매번 처음부터 설명해야 하고, 앱 수익화에 특화된 분석 프레임워크가 없습니다. 처방전은 카테고리별 벤치마크 데이터와 수익화 전문 프레임워크를 적용해 맞춤 전략을 제공합니다. 그리고 월간 구독 시, 다음 달에 물어볼 때 지난달 실험 결과를 기억하고 이어서 코칭합니다.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          진단서의 수익 예측은 어떤 근거로 나오나요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>모든 수익 시뮬레이션에는 계산 근거가 포함됩니다. "MAU × 전환율 × 구독 가격 = 예상 수익" 형태로, 어떤 전환율을 가정했는지, 왜 그 수치가 현실적인지, 카테고리별 벤치마크 대비 어느 위치인지를 투명하게 보여드립니다. 근거 없는 장밋빛 전망은 하지 않습니다.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          앱이 여러 개인데, 전부 진단해주나요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>첫 진단(4,900원)은 앱 1개 기준입니다. 앱 여러 개를 운영 중이시라면 월간 처방(49,000원/월)에서 포트폴리오 전체 전략을 다룹니다 — 어떤 앱에 집중하고, 어떤 앱을 접거나 유지할지 데이터 기반으로 판단해드립니다.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          어떤 앱이든 가능한가요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>플레이스토어/앱스토어에 출시된 앱 중, DAU 500 이상인 앱을 대상으로 합니다. 유틸리티, 정보성, 게임, 라이프스타일 등 카테고리는 무관합니다. DAU 500 미만이시라면 아래 '수익화 체크리스트'를 먼저 받아보세요.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          환불 가능한가요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>첫 진단(4,900원)은 수령 후 만족하지 않으시면 이유 불문 100% 환불해드립니다. 월간 구독(49,000원)은 결제일로부터 7일 이내 환불 가능하며, 언제든 다음 달 해지할 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ DAU < 500 EMAIL CAPTURE ═══ -->
+    <div class="early-stage reveal">
+      <h3>🌱 아직 DAU 500 미만이신가요?</h3>
+      <p>괜찮습니다. 먼저 <strong>"인디 앱 수익화 체크리스트 (무료)"</strong>를 받아보세요.<br>출시 이후 수익화까지 놓치기 쉬운 7가지 포인트를 정리했습니다.</p>
+      <div class="email-row">
+        <input type="email" placeholder="이메일 주소" id="earlyEmail">
+        <button onclick="handleEarlySignup()">무료로 받기</button>
+      </div>
+      <p class="note">스팸 없음 · 언제든 구독 해지 가능</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FINAL CTA ═══════════ -->
+<section class="final-cta">
+  <div class="container">
+    <h2 class="reveal">"뭘 해야 하는지"를<br>더 이상 혼자 고민하지 마세요.</h2>
+    <p class="reveal">커피 한 잔 값으로, 당신의 앱에 맞는 수익화 방향을 찾아보세요.</p>
+    <a href="#pricing" class="btn-primary reveal">내 앱 진단받기</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 앱 수익 처방전 &nbsp;·&nbsp; <a href="mailto:hello@example.com">문의하기</a> &nbsp;·&nbsp; <a href="#">개인정보처리방침</a></p>
+</footer>
+
+<!-- ═══════════ MODAL ═══════════ -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>📱 앱 프로필 입력</h2>
+    <p class="modal-sub">3분이면 충분합니다. 정확할수록 더 좋은 진단서를 받습니다.</p>
+    <form id="diagnosisForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label">앱 이름 <span class="required">*</span></label>
+        <input type="text" class="form-input" placeholder="예: 실검위젯" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">플랫폼 <span class="required">*</span></label>
+          <select class="form-select" required>
+            <option value="">선택</option>
+            <option>Android</option>
+            <option>iOS</option>
+            <option>Android + iOS</option>
+            <option>웹</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">카테고리 <span class="required">*</span></label>
+          <select class="form-select" required>
+            <option value="">선택</option>
+            <option>유틸리티</option>
+            <option>라이프스타일</option>
+            <option>생산성</option>
+            <option>게임</option>
+            <option>교육</option>
+            <option>건강/피트니스</option>
+            <option>소셜</option>
+            <option>기타</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">DAU (일 평균) <span class="required">*</span></label>
+          <input type="text" class="form-input" placeholder="예: 2500" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">MAU (월 평균)</label>
+          <input type="text" class="form-input" placeholder="예: 12000">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">현재 수익 모델 <span class="required">*</span></label>
+          <select class="form-select" required>
+            <option value="">선택</option>
+            <option>AdMob (배너/전면)</option>
+            <option>AdMob + 보상형</option>
+            <option>인앱결제</option>
+            <option>구독</option>
+            <option>광고 + 인앱결제 혼합</option>
+            <option>수익 모델 없음</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">월 수익 <span class="required">*</span></label>
+          <input type="text" class="form-input" placeholder="예: 40만원" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">운영 중인 앱 개수</label>
+        <select class="form-select">
+          <option value="">선택</option>
+          <option>1개</option>
+          <option>2~3개</option>
+          <option>4~5개</option>
+          <option>6개 이상</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">목표 월 수익</label>
+        <input type="text" class="form-input" placeholder="예: 150만원">
+      </div>
+      <div class="form-group">
+        <label class="form-label">가장 고민되는 것 <span class="required">*</span></label>
+        <textarea class="form-textarea" placeholder="예: 인앱결제를 달고 싶은데 뭘 유료로 만들어야 할지 모르겠어요 / 앱이 3개인데 어디에 집중해야 할지 모르겠어요" required></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">이메일 (진단서 수신용) <span class="required">*</span></label>
+        <input type="email" class="form-input" placeholder="example@gmail.com" required>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn-primary-full" id="submitBtn">결제하고 진단받기</button>
+      </div>
+      <p class="form-price-note" id="priceNote">첫 진단 · 4,900원 · 불만족 시 100% 환불</p>
+    </form>
+  </div>
+</div>
+
+<script>
+// ═══ SCROLL REVEAL ═══
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      obs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => obs.observe(el));
+
+// ═══ FAQ ═══
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ═══ MODAL ═══
+let selectedPlan = 'single';
+
+function openModal(plan) {
+  selectedPlan = plan;
+  const btn = document.getElementById('submitBtn');
+  const note = document.getElementById('priceNote');
+  if (plan === 'monthly') {
+    btn.textContent = '결제하고 월간 처방 시작';
+    note.textContent = '월간 처방 · 49,000원/월 · 첫 진단 포함 · 언제든 해지';
+  } else {
+    btn.textContent = '결제하고 진단받기';
+    note.textContent = '첫 진단 · 4,900원 · 불만족 시 100% 환불';
+  }
+  document.getElementById('formModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('formModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('formModal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// ═══ FORM SUBMIT ═══
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = '처리 중...';
+  btn.disabled = true;
+  setTimeout(() => {
+    alert('감사합니다! 결제 페이지로 이동합니다.\n\n(프리토타입: 실제로는 토스페이먼츠 결제 페이지로 연결됩니다)');
+    btn.textContent = selectedPlan === 'monthly' ? '결제하고 월간 처방 시작' : '결제하고 진단받기';
+    btn.disabled = false;
+  }, 1000);
+}
+
+// ═══ EARLY STAGE EMAIL ═══
+function handleEarlySignup() {
+  const email = document.getElementById('earlyEmail').value;
+  if (!email || !email.includes('@')) {
+    alert('이메일 주소를 입력해주세요.');
+    return;
+  }
+  alert('감사합니다! 체크리스트를 ' + email + '로 보내드리겠습니다.\n\n(프리토타입: Google Forms / Mailchimp 연동 예정)');
+  document.getElementById('earlyEmail').value = '';
+}
+
+// ═══ SMOOTH SCROLL ═══
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
