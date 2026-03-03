@@ -11,15 +11,15 @@ const faqsByLocale = {
   ko: [
     {
       question: 'ChatGPT에 물어보면 되는 거 아닌가요?',
-      answer: 'ChatGPT는 매번 처음부터 설명해야 하고, 앱 수익화에 특화된 분석 프레임워크가 없습니다. CoPO는 前 PO 경력에서 쌓은 카테고리별 벤치마크 데이터와 수익화 전문 프레임워크를 적용해 맞춤 전략을 제공합니다. 그리고 월간 구독 시, 다음 달에 물어볼 때 지난달 실험 결과를 기억하고 이어서 코칭합니다.',
+      answer: 'LLM 챗봇은 대화형 답변에 강하지만, 분석 결과가 실행 플랜으로 구조화되지는 않습니다. Propel은 Analytics -> Market -> Benchmark -> Business Model -> Sprint -> Roadmap 흐름이 연결된 대시보드를 제공합니다.',
     },
     {
-      question: '진단서의 수익 예측은 어떤 근거로 나오나요?',
+      question: '수익 예측은 어떤 근거로 나오나요?',
       answer: '모든 수익 시뮬레이션에는 계산 근거가 포함됩니다. "MAU × 전환율 × 구독 가격 = 예상 수익" 형태로, 어떤 전환율을 가정했는지, 왜 그 수치가 현실적인지, 카테고리별 벤치마크 대비 어느 위치인지를 투명하게 보여드립니다. 근거 없는 장밋빛 전망은 하지 않습니다.',
     },
     {
       question: '앱이 여러 개인데, 전부 진단해주나요?',
-      answer: '첫 진단(4,900원)은 앱 1개 기준입니다. 앱 여러 개를 운영 중이시라면 월간 처방(49,000원/월)에서 포트폴리오 전체 전략을 다룹니다. 어떤 앱에 집중하고, 어떤 앱을 접거나 유지할지 데이터 기반으로 판단해드립니다.',
+      answer: '가능합니다. Basic(19,000원)은 앱 1개 기준의 핵심 분석에 적합하고, Pro(59,000원/월)는 포트폴리오 관점으로 여러 앱의 우선순위와 로드맵까지 다룹니다.',
     },
     {
       question: '어떤 앱이든 가능한가요?',
@@ -27,13 +27,13 @@ const faqsByLocale = {
     },
     {
       question: '환불 가능한가요?',
-      answer: '첫 진단(4,900원)은 수령 후 만족하지 않으시면 이유 불문 100% 환불해드립니다. 월간 구독(49,000원)은 결제일로부터 7일 이내 환불 가능하며, 언제든 다음 달 해지할 수 있습니다.',
+      answer: '환불 및 해지 정책은 결제 단계에서 안내됩니다. 월 구독은 언제든 다음 결제 주기 전에 해지할 수 있습니다.',
     },
   ],
   en: [
     {
       question: "Why not just ask ChatGPT?",
-      answer: 'With ChatGPT you need to re-explain context every time, and it does not apply a dedicated app-monetization framework. CoPO applies category benchmarks and a PO-tested monetization framework for your specific app. With monthly subscription, your previous experiment results are remembered and coaching continues from there.',
+      answer: 'LLM chatbots are great at conversational answers, but they usually do not enforce an execution workflow. Propel connects Analytics -> Market -> Benchmark -> Business Model -> Sprint -> Roadmap in one dashboard.',
     },
     {
       question: 'What is the basis for the revenue forecast?',
@@ -41,7 +41,7 @@ const faqsByLocale = {
     },
     {
       question: 'I run multiple apps. Can all be covered?',
-      answer: 'The first diagnosis (KRW 4,900) covers one app. If you manage multiple apps, the monthly plan (KRW 49,000/mo) covers portfolio strategy: which app to focus, maintain, or sunset based on data.',
+      answer: 'Yes. Basic (KRW 19,000) is best for one-app core analysis, while Pro (KRW 59,000/mo) is designed for portfolio-level prioritization and roadmap planning.',
     },
     {
       question: 'Do you support any app category?',
@@ -49,7 +49,7 @@ const faqsByLocale = {
     },
     {
       question: 'Can I get a refund?',
-      answer: 'For the first diagnosis (KRW 4,900), you get a full refund if unsatisfied after delivery. For monthly subscription (KRW 49,000), refund is available within 7 days from payment, and you can cancel for the next cycle anytime.',
+      answer: 'Refund and cancellation policy is shown at checkout. Monthly subscription can be canceled anytime before the next billing cycle.',
     },
   ],
 } as const

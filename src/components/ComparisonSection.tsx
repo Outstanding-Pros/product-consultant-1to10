@@ -33,7 +33,7 @@ export default function ComparisonSection({ locale }: ComparisonSectionProps) {
                 <th></th>
                 <th>{isEn ? 'Courses / YouTube' : '강의 / 유튜브'}</th>
                 <th>{isEn ? 'Community' : '커뮤니티'}</th>
-                <th>CoPO</th>
+                <th>Propel</th>
               </tr>
             </thead>
             <tbody>

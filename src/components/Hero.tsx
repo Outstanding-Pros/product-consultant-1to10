@@ -12,13 +12,13 @@ export default function Hero({ locale }: HeroProps) {
       <div className="container">
         <div className="hero-content">
           <span className="hero-eyebrow">
-            {isEn ? 'Personalized monetization consulting by a former Product Owner' : '前 PO 출신 기획자의 맞춤형 수익화 컨설팅'}
+            {isEn ? 'Monetization dashboard built by former PO and growth operators' : '前 PO + 그로스 팀이 만든 수익화 대시보드'}
           </span>
           <h1>
             {isEn ? 'Users are coming in,' : '유저는 오는데,'}
             <br />
             {isEn ? 'but revenue is not catching up?' : '수익이 안 따라오시죠?'}
-            <span className="line-accent">{isEn ? 'CoPO fixes that' : 'CoPO가 해결합니다'}</span>
+            <span className="line-accent">{isEn ? 'Propel fixes that' : 'Propel이 해결합니다'}</span>
           </h1>
           <p className="hero-sub">
             {isEn ? 'Why courses and communities did not solve it:' : '강의 듣고, 커뮤니티 물어봐도 안 풀리던 이유 —'}
@@ -34,23 +34,23 @@ export default function Hero({ locale }: HeroProps) {
             )}
           </p>
           <div className="cta-group">
-            <a href="#pricing" className="btn-primary">{isEn ? 'Get My App Diagnosis' : '내 앱 진단받기'}</a>
+            <a href="#pricing" className="btn-primary">{isEn ? 'Start with Basic / Pro' : 'Basic / Pro 시작하기'}</a>
             <span className="btn-sub-text">
-              {isEn ? 'KRW 4,900 · Delivered in 24h · Refund guarantee' : '4,900원 · 24시간 이내 전달 · 환불 보장'}
+              {isEn ? 'Basic KRW 19,000 ($14) · Pro KRW 59,000 ($44) · 1+1 pre-launch offer' : 'Basic 19,000원 ($14) · Pro 59,000원 ($44) · 사전신청 1+1'}
             </span>
           </div>
           <div className="hero-proof">
             <div className="proof-item">
-              <span className="proof-number">4,900원</span>
-              <span className="proof-label">{isEn ? 'First diagnosis' : '첫 진단 비용'}</span>
+              <span className="proof-number">19,000원</span>
+              <span className="proof-label">{isEn ? 'Basic plan' : 'Basic 플랜'}</span>
             </div>
             <div className="proof-item">
-              <span className="proof-number">24h</span>
-              <span className="proof-label">{isEn ? 'Delivery time' : '진단서 전달'}</span>
+              <span className="proof-number">59,000원</span>
+              <span className="proof-label">{isEn ? 'Pro plan' : 'Pro 플랜'}</span>
             </div>
             <div className="proof-item">
-              <span className="proof-number">100%</span>
-              <span className="proof-label">{isEn ? 'Refund if unsatisfied' : '불만족 시 환불'}</span>
+              <span className="proof-number">1+1</span>
+              <span className="proof-label">{isEn ? 'Monthly pass pre-launch' : '월 구독권 사전신청'}</span>
             </div>
           </div>
         </div>

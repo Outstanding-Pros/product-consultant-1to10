@@ -431,6 +431,43 @@ body::before {
 .step h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
 .step p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
 
+/* ═══ PRODUCT DEMO ═══ */
+.demo-placeholder {
+  border: 1px dashed var(--border-accent);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(74, 222, 128, 0.04), rgba(17, 17, 22, 0.9));
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 28px;
+}
+
+.demo-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.demo-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid var(--border-accent);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.demo-placeholder p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
 /* ═══ PRESCRIPTION PREVIEW ═══ */
 .preview-section {
   background: var(--bg-secondary);
@@ -532,7 +569,7 @@ body::before {
 
 .rx-blur { position: relative; }
 .rx-blur::after {
-  content: '전체 진단서는 결제 후 확인하세요';
+  content: '전체 대시보드는 결제 후 확인하세요';
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 120px;
@@ -547,7 +584,7 @@ body::before {
   font-style: italic;
 }
 [data-locale='en'] .rx-blur::after {
-  content: 'Unlock the full report after checkout';
+  content: 'Unlock the full dashboard after checkout';
 }
 
 /* ═══ TRUST / FOUNDER ═══ */

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Reveal from './Reveal'
 import { type Locale } from '@/i18n/locale'
 
-type Plan = 'single' | 'monthly'
+type Plan = 'basic' | 'pro'
 
 type PricingAndModalProps = {
   locale: Locale
@@ -11,7 +11,7 @@ type PricingAndModalProps = {
 
 export default function PricingAndModal({ locale }: PricingAndModalProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [plan, setPlan] = useState<Plan>('single')
+  const [plan, setPlan] = useState<Plan>('basic')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const isEn = locale === 'en'
 
@@ -50,71 +50,78 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
     }, 1000)
   }
 
-  const isMonthly = plan === 'monthly'
+  const isPro = plan === 'pro'
 
   return (
     <>
       <section className="section" id="pricing">
         <div className="container">
           <Reveal><span className="section-label">PRICING</span></Reveal>
-          <Reveal><h2 className="comparison-heading">{isEn ? 'Get started' : '시작하기'}</h2></Reveal>
+          <Reveal><h2 className="comparison-heading">{isEn ? 'Choose your dashboard tier' : '대시보드 플랜 선택'}</h2></Reveal>
           <Reveal>
             <p className="comparison-sub">
-              {isEn ? 'Start with your first diagnosis. If satisfied, continue with the monthly plan.' : '첫 진단을 먼저 받고, 만족하시면 월간 구독을 시작하세요.'}
+              {isEn
+                ? 'Basic gives core analysis. Pro unlocks every feature including roadmap. Pre-launch offer: monthly subscription 1+1.'
+                : 'Basic은 핵심 분석, Pro는 전 기능(로드맵 포함) 제공합니다. 사전 신청 기간에는 월 구독 1+1 혜택이 적용됩니다.'}
             </p>
           </Reveal>
           <div className="pricing-cards">
             <Reveal>
               <div className="pricing-card">
-                <div className="pricing-tier">{isEn ? 'First Diagnosis' : '첫 진단'}</div>
+                <div className="pricing-tier">Basic</div>
                 <div className="pricing-price">
-                  <span className="pricing-amount">4,900</span>
-                  <span className="pricing-unit">{isEn ? 'KRW / one-time' : '원 / 1회'}</span>
+                  <span className="pricing-amount">19,000</span>
+                  <span className="pricing-unit">{isEn ? 'KRW / $14' : '원 / $14'}</span>
                 </div>
                 <p className="pricing-desc">
-                  {isEn ? 'Diagnose your app status and get a 30-day action plan.' : '내 앱의 현재 상태를 진단하고, 다음 30일 실행 플랜을 받으세요.'}
+                  {isEn
+                    ? 'Core dashboard for quick monetization direction.'
+                    : '빠르게 수익화 방향을 잡는 핵심 대시보드 플랜'}
                 </p>
                 <ul className="pricing-features">
-                  <li>{isEn ? 'App profile based monetization stage diagnosis (5 levels)' : '앱 프로필 기반 수익화 단계 진단 (5단계)'}</li>
-                  <li>{isEn ? 'Best-fit model recommendation + revenue simulation' : '최적 수익 모델 추천 + 예상 수익 시뮬레이션'}</li>
-                  <li>{isEn ? 'Concrete numbers with calculation rationale' : '계산 근거가 포함된 구체적 숫자'}</li>
-                  <li>{isEn ? 'Next 30-day execution plan' : '다음 30일 실행 플랜'}</li>
-                  <li>{isEn ? 'Delivered by email within 24h' : '24시간 이내 이메일 전달'}</li>
-                  <li>{isEn ? '100% refund if unsatisfied' : '불만족 시 100% 환불'}</li>
+                  <li>{isEn ? 'Analytics summary report' : 'Analytics 요약 리포트'}</li>
+                  <li>{isEn ? 'Market basic analysis' : 'Market 기본 분석'}</li>
+                  <li>{isEn ? 'Benchmark core comparison' : 'Benchmark 핵심 비교 지표'}</li>
+                  <li>{isEn ? 'Business Model top recommendations' : 'Business Model 상위 추천안'}</li>
+                  <li>{isEn ? '1-month Sprint plan (template)' : 'Sprint 1개월 실행안 (기본 템플릿)'}</li>
                 </ul>
-                <button className="btn-secondary" onClick={() => openModal('single')}>
-                  {isEn ? 'Get diagnosis - KRW 4,900' : '진단받기 — 4,900원'}
+                <button className="btn-secondary" onClick={() => openModal('basic')}>
+                  {isEn ? 'Start Basic - KRW 19,000' : 'Basic 시작 — 19,000원'}
                 </button>
               </div>
             </Reveal>
+
             <Reveal>
               <div className="pricing-card featured">
-                <div className="pricing-tier">{isEn ? 'Monthly Prescription' : '월간 처방'}</div>
+                <div className="pricing-tier">Pro</div>
                 <div className="pricing-price">
-                  <span className="pricing-amount">49,000</span>
-                  <span className="pricing-unit">{isEn ? 'KRW / month' : '원 / 월'}</span>
+                  <span className="pricing-amount">59,000</span>
+                  <span className="pricing-unit">{isEn ? 'KRW / $44 / month' : '원 / $44 / 월'}</span>
                 </div>
                 <p className="pricing-desc">
-                  {isEn ? 'A strategy partner with continuity: execute -> feedback -> next step.' : '맥락이 끊기지 않는 전략 파트너. 실행 → 피드백 → 다음 스텝.'}
+                  {isEn
+                    ? 'Full dashboard with advanced scenario planning and roadmap.'
+                    : '심화 시나리오 분석과 로드맵까지 포함한 전 기능 플랜'}
                 </p>
                 <ul className="pricing-features">
-                  <li>{isEn ? 'Includes first diagnosis (save vs separate purchase)' : '첫 진단 포함 (단독 구매보다 즉시 절약)'}</li>
-                  <li>{isEn ? 'Weekly coaching based on your execution results' : '매주 실행 결과 기반 다음 스텝 코칭'}</li>
-                  <li>{isEn ? 'Continuous strategy that remembers prior experiments' : '이전 실험 결과를 기억하는 연속 전략'}</li>
-                  <li>{isEn ? 'Clear weekly action items: exactly what to do' : '"이번 주에 정확히 뭘 하라"는 액션 아이템'}</li>
-                  <li>{isEn ? 'Portfolio strategy when running multiple apps' : '앱 여러 개 운영 시 포트폴리오 전략 포함'}</li>
-                  <li>{isEn ? 'Ask anytime via KakaoTalk / email' : '카카오톡 / 이메일로 수시 질문 가능'}</li>
-                  <li>{isEn ? 'Cancel anytime' : '언제든 해지 가능'}</li>
+                  <li>{isEn ? 'Everything in Basic' : 'Basic의 모든 기능 포함'}</li>
+                  <li>{isEn ? 'Deep Benchmark with category evidence' : '카테고리 근거 기반 Benchmark 심화 분석'}</li>
+                  <li>{isEn ? 'Business Model multi-scenario simulation' : 'Business Model 다중 시나리오 시뮬레이션'}</li>
+                  <li>{isEn ? 'Advanced Sprint (priority, experiment order, risk)' : 'Sprint 고도화 (우선순위/실험순서/리스크)'}</li>
+                  <li>{isEn ? '1-year Roadmap with North Star metric' : '북극성 지표 기반 1년 Roadmap'}</li>
+                  <li>{isEn ? 'Pre-launch monthly 1+1 offer' : '사전신청 월 구독 1+1 혜택'}</li>
                 </ul>
-                <button className="btn-primary-full" onClick={() => openModal('monthly')}>
-                  {isEn ? 'Start monthly - KRW 49,000/mo' : '월간 처방 시작 — 49,000원/월'}
+                <button className="btn-primary-full" onClick={() => openModal('pro')}>
+                  {isEn ? 'Start Pro - KRW 59,000/mo' : 'Pro 시작 — 59,000원/월'}
                 </button>
               </div>
             </Reveal>
           </div>
           <Reveal>
             <p className="pricing-note">
-              {isEn ? '* Recommended: start with the first diagnosis, then upgrade to monthly.' : '* 첫 진단 후 만족하시면 월간으로 전환하시는 걸 추천드립니다.'}
+              {isEn
+                ? '* Pro is recommended if you want full workflow: analysis -> model -> sprint -> roadmap.'
+                : '* 분석 -> 모델 -> 스프린트 -> 로드맵까지 한 번에 운영하려면 Pro를 추천합니다.'}
             </p>
           </Reveal>
         </div>
@@ -126,8 +133,8 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
       >
         <div className="modal">
           <button className="modal-close" onClick={closeModal}>×</button>
-          <h2>{isEn ? '📱 App Profile Form' : '📱 앱 프로필 입력'}</h2>
-          <p className="modal-sub">{isEn ? 'Takes 3 minutes. The more accurate your inputs, the better your report.' : '3분이면 충분합니다. 정확할수록 더 좋은 진단서를 받습니다.'}</p>
+          <h2>{isEn ? '📊 Dashboard Setup Form' : '📊 대시보드 세팅 폼'}</h2>
+          <p className="modal-sub">{isEn ? 'Takes about 3 minutes. Better inputs make better dashboard output.' : '약 3분 소요됩니다. 정확한 입력일수록 더 좋은 대시보드 결과를 제공합니다.'}</p>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label">{isEn ? 'App name' : '앱 이름'} <span className="required">*</span></label>
@@ -207,14 +214,14 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                 className="form-textarea"
                 placeholder={
                   isEn
-                    ? 'e.g. I want to add IAP but do not know what feature should be paid / I run 3 apps and do not know which one to focus on'
-                    : '예: 인앱결제를 달고 싶은데 뭘 유료로 만들어야 할지 모르겠어요 / 앱이 3개인데 어디에 집중해야 할지 모르겠어요'
+                    ? 'e.g. Need a clear paid feature strategy / not sure which app to prioritize in my portfolio'
+                    : '예: 어떤 기능을 유료화할지 모르겠어요 / 앱 포트폴리오에서 어떤 앱에 집중해야 할지 모르겠어요'
                 }
                 required
               />
             </div>
             <div className="form-group">
-              <label className="form-label">{isEn ? 'Email (for report delivery)' : '이메일 (진단서 수신용)'} <span className="required">*</span></label>
+              <label className="form-label">{isEn ? 'Email (for dashboard access)' : '이메일 (대시보드 안내 수신용)'} <span className="required">*</span></label>
               <input type="email" className="form-input" placeholder="example@gmail.com" required />
             </div>
             <div className="form-submit">
@@ -223,23 +230,23 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                   ? isEn
                     ? 'Processing...'
                     : '처리 중...'
-                  : isMonthly
+                  : isPro
                     ? isEn
-                      ? 'Pay and start monthly plan'
-                      : '결제하고 월간 처방 시작'
+                      ? 'Pay and start Pro dashboard'
+                      : '결제하고 Pro 대시보드 시작'
                     : isEn
-                      ? 'Pay and get diagnosis'
-                      : '결제하고 진단받기'}
+                      ? 'Pay and start Basic dashboard'
+                      : '결제하고 Basic 대시보드 시작'}
               </button>
             </div>
             <p className="form-price-note">
-              {isMonthly
+              {isPro
                 ? isEn
-                  ? 'Monthly plan · KRW 49,000/mo · Includes first diagnosis · Cancel anytime'
-                  : '월간 처방 · 49,000원/월 · 첫 진단 포함 · 언제든 해지'
+                  ? 'Pro · KRW 59,000 ($44) / month · All features unlocked · Pre-launch 1+1'
+                  : 'Pro · 59,000원 ($44) / 월 · 전 기능 제공 · 사전신청 1+1'
                 : isEn
-                  ? 'First diagnosis · KRW 4,900 · 100% refund if unsatisfied'
-                  : '첫 진단 · 4,900원 · 불만족 시 100% 환불'}
+                  ? 'Basic · KRW 19,000 ($14) · Core dashboard modules'
+                  : 'Basic · 19,000원 ($14) · 핵심 대시보드 모듈'}
             </p>
           </form>
         </div>

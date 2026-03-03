@@ -23,8 +23,8 @@ export default function TrustSection({ locale }: TrustSectionProps) {
               </span>
               <p>
                 {isEn
-                  ? 'CoPO is a product built from real PO execution patterns. It systemizes A/B testing, metric analysis, and hypothesis validation into a repeatable monetization workflow. Instead of person-dependent consulting, the product applies a structured framework consistently. The framework is continuously refined through a PO/GTM network of 250 members and real field cases.'
-                  : 'CoPO는 PO가 실무에서 쓰던 실행 방식을 제품으로 만든 서비스입니다. A/B 테스트, 지표 분석, 가설 검증 과정을 수익화 워크플로우로 구조화했습니다. 사람 컨디션에 따라 달라지는 컨설팅이 아니라, 프레임워크가 일관되게 적용되는 제품으로 설계했습니다. 그리고 PO/GTM 네트워크 250명 운영에서 축적되는 현장 케이스로 프레임워크를 계속 고도화합니다.'}
+                  ? 'Propel is a product built from real PO execution patterns. It systemizes A/B testing, metric analysis, and hypothesis validation into a repeatable monetization workflow. Instead of person-dependent consulting, the product applies a structured framework consistently. The framework is continuously refined through a PO/GTM network of 250 members and real field cases.'
+                  : 'Propel은 PO가 실무에서 쓰던 실행 방식을 제품으로 만든 서비스입니다. A/B 테스트, 지표 분석, 가설 검증 과정을 수익화 워크플로우로 구조화했습니다. 사람 컨디션에 따라 달라지는 컨설팅이 아니라, 프레임워크가 일관되게 적용되는 제품으로 설계했습니다. 그리고 PO/GTM 네트워크 250명 운영에서 축적되는 현장 케이스로 프레임워크를 계속 고도화합니다.'}
               </p>
               <div className="trust-credentials">
                 <span className="credential-tag" style={{ borderColor: 'var(--border-accent)', color: 'var(--accent)' }}>

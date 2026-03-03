@@ -7,46 +7,46 @@ type QuoteBarProps = {
 const quotesByLocale = {
   ko: [
     {
-      text: "진단서 보고 처음으로 '아 이걸 팔면 되겠다'가 보였습니다. 강의 10개 듣는 것보다 나았어요.",
-      author: 'K** · 유틸리티 앱 · DAU 1,800',
-      initial: 'K',
+      text: '이 제품은 前 PO 출신과 소규모 창업팀 그로스 경험이 있는 팀이 함께 만들었습니다.',
+      author: 'Propel Team',
+      initial: 'T',
     },
     {
-      text: '앱 3개 중 어디에 집중할지 6개월째 고민했는데, 데이터 기반으로 정리해주니까 바로 결정할 수 있었어요.',
-      author: 'P** · 다작형 개발자 · 앱 4개 운영',
+      text: '소규모 팀이 바로 실행할 수 있도록 Analytics, Market, Benchmark를 한 흐름으로 제공합니다.',
+      author: 'Product Ops',
       initial: 'P',
     },
     {
-      text: 'MAU 8천인데 월 30만원이었거든요. 처방대로 구독 모델 붙이고 2달 만에 월 95만원 됐습니다.',
-      author: 'J** · 라이프스타일 앱 · MAU 8,000',
-      initial: 'J',
+      text: 'LLM 답변에서 끝나지 않게 Sprint와 Roadmap까지 연결해 주는 대시보드입니다.',
+      author: 'Growth Team',
+      initial: 'G',
     },
     {
-      text: "내 앱 숫자를 넣으면 '이 가격에 이 기능을 팔아라'까지 나오는 게 충격이었어요.",
-      author: 'L** · 정보성 앱 · DAU 3,200',
-      initial: 'L',
+      text: '개인 컨설턴트 의존이 아니라, 팀의 누적 케이스를 제품 기능으로 구조화했습니다.',
+      author: 'Builder Team',
+      initial: 'B',
     },
   ],
   en: [
     {
-      text: "For the first time, the report made me think: 'This is exactly what I should sell.' Better than 10 course videos.",
-      author: 'K** · Utility app · DAU 1,800',
-      initial: 'K',
+      text: 'Built by a team with former PO and small-startup growth experience.',
+      author: 'Propel Team',
+      initial: 'T',
     },
     {
-      text: 'I had been stuck for 6 months deciding which of my 3 apps to focus on. Data-based clarity helped me decide immediately.',
-      author: 'P** · Indie maker · 4 apps',
+      text: 'Analytics, Market, and Benchmark are connected in one execution flow for small teams.',
+      author: 'Product Ops',
       initial: 'P',
     },
     {
-      text: 'My MAU was 8K and revenue was only KRW 300K. After applying the plan, it became KRW 950K in 2 months.',
-      author: 'J** · Lifestyle app · MAU 8,000',
-      initial: 'J',
+      text: 'Not just chatbot answers: it continues into Sprint and Roadmap inside the dashboard.',
+      author: 'Growth Team',
+      initial: 'G',
     },
     {
-      text: "I was shocked that it told me exactly what feature to sell and at what price after entering my app numbers.",
-      author: 'L** · Content app · DAU 3,200',
-      initial: 'L',
+      text: 'Execution know-how is productized from accumulated real cases, not tied to one consultant.',
+      author: 'Builder Team',
+      initial: 'B',
     },
   ],
 } as const
