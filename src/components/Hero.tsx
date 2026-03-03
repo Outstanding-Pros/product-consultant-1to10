@@ -36,21 +36,21 @@ export default function Hero({ locale }: HeroProps) {
           <div className="cta-group">
             <a href="#pricing" className="btn-primary">{isEn ? 'Start with Basic / Pro' : 'Basic / Pro 시작하기'}</a>
             <span className="btn-sub-text">
-              {isEn ? 'Basic KRW 19,000 ($14) · Pro KRW 59,000 ($44) · 1+1 pre-launch offer' : 'Basic 19,000원 ($14) · Pro 59,000원 ($44) · 사전신청 1+1'}
+              {isEn ? 'Basic $14 · Pro $44 · 1+1 pre-launch offer' : 'Basic 19,000원 ($14) · Pro 59,000원 ($44) · 사전신청 1+1'}
             </span>
           </div>
           <div className="hero-proof">
             <div className="proof-item">
-              <span className="proof-number">19,000원</span>
+              <span className="proof-number">{isEn ? '$14' : '19,000원'}</span>
               <span className="proof-label">{isEn ? 'Basic plan' : 'Basic 플랜'}</span>
             </div>
             <div className="proof-item">
-              <span className="proof-number">59,000원</span>
+              <span className="proof-number">{isEn ? '$44' : '59,000원'}</span>
               <span className="proof-label">{isEn ? 'Pro plan' : 'Pro 플랜'}</span>
             </div>
             <div className="proof-item">
               <span className="proof-number">1+1</span>
-              <span className="proof-label">{isEn ? 'Monthly pass pre-launch' : '월 구독권 사전신청'}</span>
+              <span className="proof-label">{isEn ? 'Monthly pass pre-launch' : '월 구독권 사전신청 시'}</span>
             </div>
           </div>
         </div>

@@ -41,7 +41,7 @@ const faqsByLocale = {
     },
     {
       question: 'I run multiple apps. Can all be covered?',
-      answer: 'Yes. Basic (KRW 19,000) is best for one-app core analysis, while Pro (KRW 59,000/mo) is designed for portfolio-level prioritization and roadmap planning.',
+      answer: 'Yes. Basic ($14) is best for one-app core analysis, while Pro ($44/mo) is designed for portfolio-level prioritization and roadmap planning.',
     },
     {
       question: 'Do you support any app category?',

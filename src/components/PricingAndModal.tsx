@@ -70,8 +70,8 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
               <div className="pricing-card">
                 <div className="pricing-tier">Basic</div>
                 <div className="pricing-price">
-                  <span className="pricing-amount">19,000</span>
-                  <span className="pricing-unit">{isEn ? 'KRW / $14' : '원 / $14'}</span>
+                  <span className="pricing-amount">{isEn ? '14' : '19,000'}</span>
+                  <span className="pricing-unit">{isEn ? 'USD' : '원 / $14'}</span>
                 </div>
                 <p className="pricing-desc">
                   {isEn
@@ -86,7 +86,7 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                   <li>{isEn ? '1-month Sprint plan (template)' : 'Sprint 1개월 실행안 (기본 템플릿)'}</li>
                 </ul>
                 <button className="btn-secondary" onClick={() => openModal('basic')}>
-                  {isEn ? 'Start Basic - KRW 19,000' : 'Basic 시작 — 19,000원'}
+                  {isEn ? 'Start Basic - $14' : 'Basic 시작 — 19,000원'}
                 </button>
               </div>
             </Reveal>
@@ -95,8 +95,8 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
               <div className="pricing-card featured">
                 <div className="pricing-tier">Pro</div>
                 <div className="pricing-price">
-                  <span className="pricing-amount">59,000</span>
-                  <span className="pricing-unit">{isEn ? 'KRW / $44 / month' : '원 / $44 / 월'}</span>
+                  <span className="pricing-amount">{isEn ? '44' : '59,000'}</span>
+                  <span className="pricing-unit">{isEn ? 'USD / month' : '원 / $44 / 월'}</span>
                 </div>
                 <p className="pricing-desc">
                   {isEn
@@ -112,7 +112,7 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                   <li>{isEn ? 'Pre-launch monthly 1+1 offer' : '사전신청 월 구독 1+1 혜택'}</li>
                 </ul>
                 <button className="btn-primary-full" onClick={() => openModal('pro')}>
-                  {isEn ? 'Start Pro - KRW 59,000/mo' : 'Pro 시작 — 59,000원/월'}
+                  {isEn ? 'Start Pro - $44/mo' : 'Pro 시작 — 59,000원/월'}
                 </button>
               </div>
             </Reveal>
@@ -191,7 +191,7 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
               </div>
               <div className="form-group">
                 <label className="form-label">{isEn ? 'Monthly revenue' : '월 수익'} <span className="required">*</span></label>
-                <input type="text" className="form-input" placeholder={isEn ? 'e.g. KRW 400,000' : '예: 40만원'} required />
+                <input type="text" className="form-input" placeholder={isEn ? 'e.g. USD 300' : '예: 40만원'} required />
               </div>
             </div>
             <div className="form-group">
@@ -206,7 +206,7 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
             </div>
             <div className="form-group">
               <label className="form-label">{isEn ? 'Target monthly revenue' : '목표 월 수익'}</label>
-              <input type="text" className="form-input" placeholder={isEn ? 'e.g. KRW 1,500,000' : '예: 150만원'} />
+              <input type="text" className="form-input" placeholder={isEn ? 'e.g. USD 1,000' : '예: 150만원'} />
             </div>
             <div className="form-group">
               <label className="form-label">{isEn ? 'Biggest challenge right now' : '가장 고민되는 것'} <span className="required">*</span></label>
@@ -242,10 +242,10 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
             <p className="form-price-note">
               {isPro
                 ? isEn
-                  ? 'Pro · KRW 59,000 ($44) / month · All features unlocked · Pre-launch 1+1'
+                  ? 'Pro · $44 / month · All features unlocked · Pre-launch 1+1'
                   : 'Pro · 59,000원 ($44) / 월 · 전 기능 제공 · 사전신청 1+1'
                 : isEn
-                  ? 'Basic · KRW 19,000 ($14) · Core dashboard modules'
+                  ? 'Basic · $14 · Core dashboard modules'
                   : 'Basic · 19,000원 ($14) · 핵심 대시보드 모듈'}
             </p>
           </form>

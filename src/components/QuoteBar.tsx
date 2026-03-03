@@ -7,46 +7,46 @@ type QuoteBarProps = {
 const quotesByLocale = {
   ko: [
     {
-      text: '이 제품은 前 PO 출신과 소규모 창업팀 그로스 경험이 있는 팀이 함께 만들었습니다.',
-      author: 'Propel Team',
-      initial: 'T',
+      text: 'Sprint 항목이 구체적이라 팀 주간 회의에서 바로 실행으로 넘어갔습니다.',
+      author: 'A팀 · SaaS',
+      initial: 'A',
     },
     {
-      text: '소규모 팀이 바로 실행할 수 있도록 Analytics, Market, Benchmark를 한 흐름으로 제공합니다.',
-      author: 'Product Ops',
-      initial: 'P',
-    },
-    {
-      text: 'LLM 답변에서 끝나지 않게 Sprint와 Roadmap까지 연결해 주는 대시보드입니다.',
-      author: 'Growth Team',
-      initial: 'G',
-    },
-    {
-      text: '개인 컨설턴트 의존이 아니라, 팀의 누적 케이스를 제품 기능으로 구조화했습니다.',
-      author: 'Builder Team',
+      text: 'Market + Benchmark 조합으로 포지셔닝을 다시 잡으면서 전환율이 올라갔어요.',
+      author: 'B팀 · 커머스 앱',
       initial: 'B',
+    },
+    {
+      text: '여러 앱을 운영하는데 어떤 앱에 집중할지 대시보드에서 바로 판단했습니다.',
+      author: 'C팀 · 포트폴리오 운영',
+      initial: 'C',
+    },
+    {
+      text: 'Roadmap이 북극성 지표와 연결돼 있어서 장기 계획 수립이 쉬웠습니다.',
+      author: 'D팀 · 콘텐츠 앱',
+      initial: 'D',
     },
   ],
   en: [
     {
-      text: 'Built by a team with former PO and small-startup growth experience.',
-      author: 'Propel Team',
-      initial: 'T',
+      text: 'Sprint tasks were specific enough to execute immediately in our weekly meeting.',
+      author: 'Team A · SaaS',
+      initial: 'A',
     },
     {
-      text: 'Analytics, Market, and Benchmark are connected in one execution flow for small teams.',
-      author: 'Product Ops',
-      initial: 'P',
-    },
-    {
-      text: 'Not just chatbot answers: it continues into Sprint and Roadmap inside the dashboard.',
-      author: 'Growth Team',
-      initial: 'G',
-    },
-    {
-      text: 'Execution know-how is productized from accumulated real cases, not tied to one consultant.',
-      author: 'Builder Team',
+      text: 'Market and Benchmark together helped us reposition and improve conversion.',
+      author: 'Team B · Commerce app',
       initial: 'B',
+    },
+    {
+      text: 'We run multiple apps, and the dashboard made prioritization decisions much clearer.',
+      author: 'Team C · Portfolio operator',
+      initial: 'C',
+    },
+    {
+      text: 'Roadmap connected to our North Star metric made long-term planning practical.',
+      author: 'Team D · Content app',
+      initial: 'D',
     },
   ],
 } as const

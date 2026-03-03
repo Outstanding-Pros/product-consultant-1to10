@@ -220,6 +220,14 @@ body::before {
 }
 .proof-label { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 
+.hero-team-note {
+  margin-top: 28px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 760px;
+  line-height: 1.8;
+}
+
 /* ═══ SOCIAL PROOF QUOTE BAR ═══ */
 .quote-bar {
   background: var(--bg-secondary);

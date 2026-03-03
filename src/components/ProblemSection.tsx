@@ -16,8 +16,8 @@ export default function ProblemSection({ locale }: ProblemSectionProps) {
         <div className="problem-cards">
           <Reveal>
             <div className="problem-card">
-              <span className="problem-icon">📉</span>
-              <h3>{isEn ? 'You hit the AdMob ceiling' : 'AdMob으로 천장에 부딪혔다'}</h3>
+              <span className="problem-icon"></span>
+              <h3>📉  {isEn ? 'You hit the AdMob ceiling' : 'AdMob으로 천장에 부딪혔다'}</h3>
               <p>
                 {isEn
                   ? 'Back-calculating shows it: reaching KRW 1M/month with ads alone often needs DAU around 6K-7K. Ad revenue has a hard ceiling.'
@@ -27,8 +27,8 @@ export default function ProblemSection({ locale }: ProblemSectionProps) {
           </Reveal>
           <Reveal>
             <div className="problem-card">
-              <span className="problem-icon">🔄</span>
-              <h3>{isEn ? 'You are stuck at “what should be paid?”' : '"뭘 유료로 만들지"에서 멈췄다'}</h3>
+              <span className="problem-icon"></span>
+              <h3>🔄  {isEn ? 'You are stuck at “what should be paid?”' : '"뭘 유료로 만들지"에서 멈췄다'}</h3>
               <p>
                 {isEn ? (
                   <>
@@ -44,8 +44,8 @@ export default function ProblemSection({ locale }: ProblemSectionProps) {
           </Reveal>
           <Reveal>
             <div className="problem-card">
-              <span className="problem-icon">🤹</span>
-              <h3>{isEn ? 'You have multiple apps but no focus' : '앱이 여러 개인데 어디에 집중할지 모르겠다'}</h3>
+              <span className="problem-icon"></span>
+              <h3>🤹  {isEn ? 'You have multiple apps but no focus' : '앱이 여러 개인데 어디에 집중할지 모르겠다'}</h3>
               <p>
                 {isEn
                   ? 'You run 2-5 apps, but none breaks out. You have data, but no decision framework for what to scale or sunset.'
@@ -55,8 +55,8 @@ export default function ProblemSection({ locale }: ProblemSectionProps) {
           </Reveal>
           <Reveal>
             <div className="problem-card">
-              <span className="problem-icon">😶</span>
-              <h3>{isEn ? 'You have nowhere to ask with context' : '물어볼 곳이 없다'}</h3>
+              <span className="problem-icon"></span>
+              <h3>😶  {isEn ? 'You have nowhere to ask with context' : '물어볼 곳이 없다'}</h3>
               <p>
                 {isEn ? (
                   <>
