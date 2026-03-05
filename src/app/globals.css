@@ -476,6 +476,137 @@ body::before {
   font-size: 14px;
 }
 
+/* ═══ KEYSHOTS ═══ */
+.keyshot-section {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.keyshot-band {
+  padding: 96px 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.keyshot-band.alt {
+  background: var(--bg-secondary);
+}
+
+.keyshot-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.keyshot-row.reverse {
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.keyshot-row.reverse .keyshot-copy {
+  order: 2;
+}
+
+.keyshot-row.reverse .keyshot-frame {
+  order: 1;
+}
+
+.keyshot-title {
+  font-size: clamp(40px, 4vw, 58px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.8px;
+}
+
+.keyshot-subtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.keyshot-subtitle::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.keyshot-desc {
+  font-size: clamp(20px, 1.8vw, 25px);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 28px;
+  max-width: 640px;
+}
+
+.keyshot-frame {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.keyshot-frame-top {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.keyshot-frame-top span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+
+.keyshot-image-wrap {
+  min-height: 520px;
+}
+
+.keyshot-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+@media (prefers-color-scheme: light) {
+  .keyshot-band {
+    background: #ffffff;
+    color: #0f172a;
+  }
+  .keyshot-band.alt {
+    background: #f8fafc;
+  }
+  .keyshot-desc {
+    color: #334155;
+  }
+  .keyshot-frame {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+  }
+  .keyshot-frame-top {
+    background: #f1f5f9;
+    border-bottom-color: #e2e8f0;
+  }
+  .keyshot-frame-top span {
+    background: #cbd5e1;
+  }
+}
+
 /* ═══ PRESCRIPTION PREVIEW ═══ */
 .preview-section {
   background: var(--bg-secondary);
@@ -1093,4 +1224,26 @@ body::before {
   .framework-steps { grid-template-columns: 1fr 1fr; }
   .email-row { flex-direction: column; }
   .early-stage { padding: 32px 24px; }
+  .keyshot-band {
+    padding: 72px 0;
+  }
+  .keyshot-row,
+  .keyshot-row.reverse {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .keyshot-row.reverse .keyshot-copy,
+  .keyshot-row.reverse .keyshot-frame {
+    order: initial;
+  }
+  .keyshot-title {
+    font-size: 34px;
+  }
+  .keyshot-desc {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  .keyshot-image-wrap {
+    min-height: 280px;
+  }
 }

@@ -2,7 +2,6 @@ import Hero from '@/components/Hero'
 import QuoteBar from '@/components/QuoteBar'
 import ProblemSection from '@/components/ProblemSection'
 import ProductDemo from '@/components/ProductDemo'
-import PrescriptionPreview from '@/components/PrescriptionPreview'
 import PricingAndModal from '@/components/PricingAndModal'
 import FaqSection from '@/components/FaqSection'
 import FinalCta from '@/components/FinalCta'
@@ -28,7 +27,6 @@ export default async function Home({ searchParams }: PageProps) {
       <QuoteBar locale={locale} />
       <ProblemSection locale={locale} />
       <ProductDemo locale={locale} />
-      <PrescriptionPreview locale={locale} />
       <PricingAndModal locale={locale} />
       <FaqSection locale={locale} />
       <FinalCta locale={locale} />
