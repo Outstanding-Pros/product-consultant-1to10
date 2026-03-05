@@ -42,7 +42,6 @@ const quotesByLocale = {
       text: 'How are communities at a similar scale monetizing? Server costs are starting to scare me.',
       author: 'Community app operator',
       initial: 'C',
-      initial: 'C',
     },
     {
       text: 'Users come back every day, but it does not connect to revenue. I cannot tell if these metrics are sustainable.',
