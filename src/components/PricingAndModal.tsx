@@ -56,13 +56,20 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
     <>
       <section className="section" id="pricing">
         <div className="container">
-          <Reveal><span className="section-label">PRICING</span></Reveal>
-          <Reveal><h2 className="comparison-heading">{isEn ? 'Choose your dashboard tier' : '대시보드 플랜 선택'}</h2></Reveal>
+            <Reveal><span className="section-label">PRICING</span></Reveal>
+            <Reveal>
+            <h2 className="comparison-heading">
+              {isEn 
+              ? <>Prepay now,<br />and get your plan <span className="highlight">50%</span> cheaper</>
+              : <>지금 사전 결제하면,<br /> 원하는 플랜이 <span className="highlight">50%</span> 저렴해요</>}
+            </h2>
+            </Reveal>
+
           <Reveal>
             <p className="comparison-sub">
               {isEn
-                ? 'Basic gives core analysis. Pro unlocks every feature including roadmap. Pre-launch offer: monthly subscription 1+1.'
-                : 'Basic은 핵심 분석, Pro는 전 기능(로드맵 포함) 제공합니다. 사전 신청 기간에는 월 구독 1+1 혜택이 적용됩니다.'}
+                ? <>Choose based on your target revenue scale.<br />Basic covers the essentials for sprint execution, while Pro adds deeper competitor and macro-trend analysis for concrete strategy.</>
+                : <>목표 수익 규모에 따라 나누어 선택할 수 있어요. <br />Basic은 스프린트 실행에 필요한 핵심만, Pro는 업계 경쟁 서비스 분석부터 거시적 트렌드까지 분석하여 구체적인 전략을 제공해요.</>}
             </p>
           </Reveal>
           <div className="pricing-cards">
@@ -71,12 +78,12 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                 <div className="pricing-tier">Basic</div>
                 <div className="pricing-price">
                   <span className="pricing-amount">{isEn ? '14' : '19,000'}</span>
-                  <span className="pricing-unit">{isEn ? 'USD' : '원 / $14'}</span>
+                  <span className="pricing-unit">{isEn ? 'USD / month' : '원 / 월'}</span>
                 </div>
                 <p className="pricing-desc">
                   {isEn
-                    ? 'Core dashboard for quick monetization direction.'
-                    : '빠르게 수익화 방향을 잡는 핵심 대시보드 플랜'}
+                    ? 'Core analysis automation plan for improving revenue quickly.'
+                    : '빠르게 수익을 개선하는 핵심 분석 자동화 플랜'}
                 </p>
                 <ul className="pricing-features">
                   <li>{isEn ? 'Analytics summary report' : 'Analytics 요약 리포트'}</li>
@@ -84,9 +91,18 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                   <li>{isEn ? 'Benchmark core comparison' : 'Benchmark 핵심 비교 지표'}</li>
                   <li>{isEn ? 'Business Model top recommendations' : 'Business Model 상위 추천안'}</li>
                   <li>{isEn ? '1-month Sprint plan (template)' : 'Sprint 1개월 실행안 (기본 템플릿)'}</li>
+                  
                 </ul>
                 <button className="btn-secondary" onClick={() => openModal('basic')}>
-                  {isEn ? 'Start Basic - $14' : 'Basic 시작 — 19,000원'}
+                  {isEn ? (
+                    <>
+                      <span className="price-strike">$14/mo</span> <span className="price-sale">$7/mo</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="price-strike">19,000원/월</span> <span className="price-sale">9,500원/월</span>
+                    </>
+                  )}
                 </button>
               </div>
             </Reveal>
@@ -95,35 +111,36 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
               <div className="pricing-card featured">
                 <div className="pricing-tier">Pro</div>
                 <div className="pricing-price">
-                  <span className="pricing-amount">{isEn ? '44' : '59,000'}</span>
-                  <span className="pricing-unit">{isEn ? 'USD / month' : '원 / $44 / 월'}</span>
+                  <span className="pricing-amount">{isEn ? '40' : '59,000'}</span>
+                  <span className="pricing-unit">{isEn ? 'USD / month' : '원 / 월'}</span>
                 </div>
                 <p className="pricing-desc">
                   {isEn
-                    ? 'Full dashboard with advanced scenario planning and roadmap.'
-                    : '심화 시나리오 분석과 로드맵까지 포함한 전 기능 플랜'}
+                    ? 'Business plan with in-depth market and macro-economic analysis.'
+                    : '심층 시장/경제 분석을 담은 비즈니스 플랜'}
                 </p>
                 <ul className="pricing-features">
                   <li>{isEn ? 'Everything in Basic' : 'Basic의 모든 기능 포함'}</li>
+                  <li>{isEn ? 'Up to 3 services' : '최대 3개 서비스 제공'}</li>
                   <li>{isEn ? 'Deep Benchmark with category evidence' : '카테고리 근거 기반 Benchmark 심화 분석'}</li>
                   <li>{isEn ? 'Business Model multi-scenario simulation' : 'Business Model 다중 시나리오 시뮬레이션'}</li>
                   <li>{isEn ? 'Advanced Sprint (priority, experiment order, risk)' : 'Sprint 고도화 (우선순위/실험순서/리스크)'}</li>
                   <li>{isEn ? '1-year Roadmap with North Star metric' : '북극성 지표 기반 1년 Roadmap'}</li>
-                  <li>{isEn ? 'Pre-launch monthly 1+1 offer' : '사전신청 월 구독 1+1 혜택'}</li>
                 </ul>
                 <button className="btn-primary-full" onClick={() => openModal('pro')}>
-                  {isEn ? 'Start Pro - $44/mo' : 'Pro 시작 — 59,000원/월'}
+                  {isEn ? (
+                    <>
+                      <span className="price-strike">$40/mo</span> <span className="price-sale">$20/mo</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="price-strike">59,000원/월</span> <span className="price-sale">29,500원/월</span>
+                    </>
+                  )}
                 </button>
               </div>
             </Reveal>
           </div>
-          <Reveal>
-            <p className="pricing-note">
-              {isEn
-                ? '* Pro is recommended if you want full workflow: analysis -> model -> sprint -> roadmap.'
-                : '* 분석 -> 모델 -> 스프린트 -> 로드맵까지 한 번에 운영하려면 Pro를 추천합니다.'}
-            </p>
-          </Reveal>
         </div>
       </section>
 
@@ -137,8 +154,8 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
           <p className="modal-sub">{isEn ? 'Takes about 3 minutes. Better inputs make better dashboard output.' : '약 3분 소요됩니다. 정확한 입력일수록 더 좋은 대시보드 결과를 제공합니다.'}</p>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="form-label">{isEn ? 'App name' : '앱 이름'} <span className="required">*</span></label>
-              <input type="text" className="form-input" placeholder={isEn ? 'e.g. Realtime Widget' : '예: 실검위젯'} required />
+              <label className="form-label">{isEn ? 'Service name' : '서비스 이름'} <span className="required">*</span></label>
+              <input type="text" className="form-input" placeholder={isEn ? 'e.g. Discussion Board' : '예: 토론철'} required />
             </div>
             <div className="form-row">
               <div className="form-group">
@@ -242,8 +259,8 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
             <p className="form-price-note">
               {isPro
                 ? isEn
-                  ? 'Pro · $44 / month · All features unlocked · Pre-launch 1+1'
-                  : 'Pro · 59,000원 ($44) / 월 · 전 기능 제공 · 사전신청 1+1'
+                  ? 'Pro · $40 / month · All features unlocked · Pre-launch 1+1'
+                  : 'Pro · 59,000원 ($40) / 월 · 전 기능 제공 · 사전신청 1+1'
                 : isEn
                   ? 'Basic · $14 · Core dashboard modules'
                   : 'Basic · 19,000원 ($14) · 핵심 대시보드 모듈'}

@@ -30,7 +30,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.container { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
 .section { padding: 100px 0; position: relative; }
 
 .lang-switcher {
@@ -146,6 +146,12 @@ body::before {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.hero-brand-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
 }
 
 .hero-sub {
@@ -319,14 +325,6 @@ body::before {
   border-color: var(--border-accent);
   background: var(--bg-card-hover);
   transform: translateY(-4px);
-}
-.problem-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--danger), transparent);
-  opacity: 0.6;
 }
 .problem-icon { font-size: 32px; margin-bottom: 20px; display: block; }
 .problem-card h3 {
@@ -512,11 +510,12 @@ body::before {
 }
 
 .keyshot-title {
-  font-size: clamp(40px, 4vw, 58px);
+  font-size: clamp(28px, 2.6vw, 40px);
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.3;
   margin-bottom: 16px;
   letter-spacing: -0.8px;
+  white-space: pre-line;
 }
 
 .keyshot-subtitle {
@@ -539,11 +538,12 @@ body::before {
 }
 
 .keyshot-desc {
-  font-size: clamp(20px, 1.8vw, 25px);
+  font-size: clamp(16px, 1.1vw, 19px);
   color: var(--text-secondary);
   line-height: 1.7;
   margin-bottom: 28px;
   max-width: 640px;
+  white-space: pre-line;
 }
 
 .keyshot-frame {
@@ -805,6 +805,59 @@ body::before {
   color: var(--accent);
 }
 
+.signal-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.signal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 20px 18px;
+}
+
+.signal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.signal-id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  border: 1px solid var(--border-accent);
+  background: var(--accent-glow);
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.signal-head h3 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.signal-quote {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.signal-need {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  border-top: 1px dashed var(--border);
+  padding-top: 10px;
+}
+
 .framework-steps {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -847,6 +900,7 @@ body::before {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   margin-top: 56px;
+  align-items: stretch;
 }
 .pricing-card {
   background: var(--bg-card);
@@ -855,6 +909,9 @@ body::before {
   padding: 44px 36px;
   position: relative;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .pricing-card:hover { transform: translateY(-4px); }
 .pricing-card.featured {
@@ -862,7 +919,7 @@ body::before {
   background: linear-gradient(180deg, rgba(74, 222, 128, 0.05) 0%, var(--bg-card) 100%);
 }
 .pricing-card.featured::before {
-  content: '추천';
+  content: '인기';
   position: absolute;
   top: -12px; left: 36px;
   background: var(--accent);
@@ -917,6 +974,10 @@ body::before {
   flex-shrink: 0;
   margin-top: 1px;
 }
+.pricing-card .btn-secondary,
+.pricing-card .btn-primary-full {
+  margin-top: auto;
+}
 
 .btn-secondary {
   display: block;
@@ -935,6 +996,16 @@ body::before {
   transition: all 0.3s ease;
 }
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+.price-strike {
+  text-decoration: line-through;
+  opacity: 0.2;
+  margin: 0 4px;
+}
+
+.price-sale {
+  font-weight: 800;
+}
 
 .btn-primary-full {
   display: block;
@@ -1114,6 +1185,91 @@ body::before {
 }
 .footer a { color: var(--text-secondary); text-decoration: none; }
 .footer a:hover { color: var(--accent); }
+.footer-link-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+.footer-link-btn:hover { color: var(--accent); }
+.footer-copy-hint {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.privacy-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+.privacy-modal-overlay.active { display: flex; }
+
+.privacy-modal {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  border-radius: 18px;
+  padding: 28px 28px 18px;
+}
+
+.privacy-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 24px;
+  cursor: pointer;
+}
+.privacy-modal-close:hover { color: var(--text-primary); }
+
+.privacy-modal h2 {
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+
+.privacy-content {
+  overflow-y: auto;
+  max-height: calc(90vh - 90px);
+  padding-right: 6px;
+}
+
+.privacy-section {
+  margin-bottom: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.privacy-section h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.privacy-section p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 6px;
+}
 
 /* ═══ REVEAL ═══ */
 .reveal {
@@ -1222,6 +1378,7 @@ body::before {
   .trust-photo { margin: 0 auto; }
   .trust-credentials { justify-content: center; }
   .framework-steps { grid-template-columns: 1fr 1fr; }
+  .signal-grid { grid-template-columns: 1fr; }
   .email-row { flex-direction: column; }
   .early-stage { padding: 32px 24px; }
   .keyshot-band {
@@ -1237,10 +1394,10 @@ body::before {
     order: initial;
   }
   .keyshot-title {
-    font-size: 34px;
+    font-size: 24px;
   }
   .keyshot-desc {
-    font-size: 18px;
+    font-size: 15px;
     margin-bottom: 20px;
   }
   .keyshot-image-wrap {

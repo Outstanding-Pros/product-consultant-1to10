@@ -13,13 +13,17 @@ export default function FinalCta({ locale }: FinalCtaProps) {
       <div className="container">
         <Reveal>
           <h2>
-            {isEn ? 'Stop overthinking' : '"뭘 해야 하는지"를'}
+            {isEn ? 'Your own revenue strategy engine,' : '연쇄 창업가와 현직 PO의 경험이 담긴'}
             <br />
-            {isEn ? 'and start executing with your dashboard.' : '대시보드로 바로 실행해보세요.'}
+            {isEn ? 'built from serial founders and active POs.' : '나만의 수익 전략 엔진, Propel'}
           </h2>
         </Reveal>
-        <Reveal><p>{isEn ? 'Basic gives core insights, Pro unlocks full workflow from analysis to roadmap.' : 'Basic은 핵심 인사이트, Pro는 분석부터 로드맵까지 전 기능을 제공합니다.'}</p></Reveal>
-        <Reveal><a href="#pricing" className="btn-primary">{isEn ? 'Start Basic / Pro' : 'Basic / Pro 시작하기'}</a></Reveal>
+        <Reveal><p>{isEn 
+        ? <>We deliver this service with insights accumulated<br />
+        from running a private product builder network of 250 members over 2 years.</> 
+        : <>2년간 250명 규모의 프라이빗 프로덕트 빌더 네트워크를 <br />
+        운영하며 얻은 인사이트를 서비스로 제공합니다.</>}</p></Reveal>
+        <Reveal><a href="#pricing" className="btn-primary">{isEn ? 'Prepay now' : '사전 결제하기'}</a></Reveal>
       </div>
     </section>
   )

@@ -15,19 +15,19 @@ const faqsByLocale = {
     },
     {
       question: '수익 예측은 어떤 근거로 나오나요?',
-      answer: '모든 수익 시뮬레이션에는 계산 근거가 포함됩니다. "MAU × 전환율 × 구독 가격 = 예상 수익" 형태로, 어떤 전환율을 가정했는지, 왜 그 수치가 현실적인지, 카테고리별 벤치마크 대비 어느 위치인지를 투명하게 보여드립니다. 근거 없는 장밋빛 전망은 하지 않습니다.',
+      answer: '모든 수익 시뮬레이션에는 계산 근거가 포함됩니다. "MAU × 전환율 × 구독 가격 = 예상 수익" 형태로, 어떤 전환율을 가정했는지, 왜 그 수치가 현실적인지, 카테고리별 벤치마크 대비 어느 위치인지를 투명하게 보여드립니다. 일관성 없이 무조건 긍정 응답하는 LLM과 다릅니다.',
     },
     {
-      question: '앱이 여러 개인데, 전부 진단해주나요?',
-      answer: '가능합니다. Basic(19,000원)은 앱 1개 기준의 핵심 분석에 적합하고, Pro(59,000원/월)는 포트폴리오 관점으로 여러 앱의 우선순위와 로드맵까지 다룹니다.',
+      question: '서비스가 여러 개인데, 전부 연결할 수 있나요?',
+      answer: 'Basic 플랜은 1개 서비스 연결이 가능하며, Pro 플랜은 3개 서비스 연결이 가능합니다. 단, MAU가 500 이하인 서비스의 경우 데이터 분석의 정확도가 낮을 수 있으니, 문의를 통해 상담을 먼저 받아보세요.',
     },
     {
-      question: '어떤 앱이든 가능한가요?',
-      answer: "플레이스토어/앱스토어에 출시된 앱 중, DAU 500 이상인 앱을 대상으로 합니다. 유틸리티, 정보성, 게임, 라이프스타일 등 카테고리는 무관합니다. DAU 500 미만이시라면 아래 '수익화 체크리스트'를 먼저 받아보세요.",
+      question: '어떤 서비스든 가능한가요?',
+      answer: "유틸리티, 정보성, 게임, 라이프스타일 등 모든 카테고리가 가능합니다. 단, 출시 직후에는 '웹' 서비스만 지원하며, 앱 서비스는 26년 6월 이후로 지원 예정입니다.",
     },
     {
       question: '환불 가능한가요?',
-      answer: '환불 및 해지 정책은 결제 단계에서 안내됩니다. 월 구독은 언제든 다음 결제 주기 전에 해지할 수 있습니다.',
+      answer: '사전 신청은 언제든 환불 가능하며, 월 구독은 다음 결제 주기 전 해지할 수 있습니다. 환불 및 해지 정책은 결제 단계에서 자세히 안내됩니다.',
     },
   ],
   en: [
@@ -41,7 +41,7 @@ const faqsByLocale = {
     },
     {
       question: 'I run multiple apps. Can all be covered?',
-      answer: 'Yes. Basic ($14) is best for one-app core analysis, while Pro ($44/mo) is designed for portfolio-level prioritization and roadmap planning.',
+      answer: 'Yes. Basic ($14) is best for one-app core analysis, while Pro ($40/mo) is designed for portfolio-level prioritization and roadmap planning.',
     },
     {
       question: 'Do you support any app category?',
@@ -93,35 +93,6 @@ export default function FaqSection({ locale }: FaqSectionProps) {
             </Reveal>
           ))}
         </div>
-
-        <Reveal>
-          <div className="early-stage">
-            <h3>{isEn ? '🌱 Is your DAU still below 500?' : '🌱 아직 DAU 500 미만이신가요?'}</h3>
-            <p>
-              {isEn ? (
-                <>
-                  Totally fine. Get the <strong>&quot;Indie App Monetization Checklist (Free)&quot;</strong> first.<br />
-                  It covers 7 points most founders miss between launch and monetization.
-                </>
-              ) : (
-                <>
-                  괜찮습니다. 먼저 <strong>&quot;인디 앱 수익화 체크리스트 (무료)&quot;</strong>를 받아보세요.<br />
-                  출시 이후 수익화까지 놓치기 쉬운 7가지 포인트를 정리했습니다.
-                </>
-              )}
-            </p>
-            <div className="email-row">
-              <input
-                type="email"
-                placeholder={isEn ? 'Email address' : '이메일 주소'}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <button onClick={handleEarlySignup}>{isEn ? 'Get it free' : '무료로 받기'}</button>
-            </div>
-            <p className="note">{isEn ? 'No spam · Unsubscribe anytime' : '스팸 없음 · 언제든 구독 해지 가능'}</p>
-          </div>
-        </Reveal>
       </div>
     </section>
   )

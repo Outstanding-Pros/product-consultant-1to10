@@ -1,5 +1,11 @@
 import Reveal from './Reveal'
 import { type Locale } from '@/i18n/locale'
+import {
+  CommentIcon,
+  GraphBarVerticalIcon,
+  KeyIcon,
+  StackIcon,
+} from '@primer/octicons-react'
 
 type ProblemSectionProps = {
   locale: Locale
@@ -12,12 +18,28 @@ export default function ProblemSection({ locale }: ProblemSectionProps) {
     <section className="section problem-section">
       <div className="container">
         <Reveal><span className="section-label">PROBLEM</span></Reveal>
-        <Reveal><h2 className="problem-heading">{isEn ? 'Are you in one of these situations?' : '혹시 이런 상태이신가요?'}</h2></Reveal>
+        <Reveal>
+          <h2 className="problem-heading">
+            {isEn ? (
+              <>
+                Fun to vibe-code.
+                <br />
+                <span className="highlight">But hard to make money.</span>
+              </>
+            ) : (
+              <>
+                바이브코딩은 재밌죠,
+                <br />
+                <span className="highlight">근데 돈은 어떻게 벌어요?</span>
+              </>
+            )}
+          </h2>
+        </Reveal>
         <div className="problem-cards">
           <Reveal>
             <div className="problem-card">
-              <span className="problem-icon"></span>
-              <h3>📉  {isEn ? 'You hit the AdMob ceiling' : 'AdMob으로 천장에 부딪혔다'}</h3>
+              <span className="problem-icon"><GraphBarVerticalIcon size={28} /></span>
+              <h3>  {isEn ? 'AdMob revenue is not satisfying' : 'AdMob 수익은 만족스럽지 않아요'}</h3>
               <p>
                 {isEn
                   ? 'Back-calculating shows it: reaching KRW 1M/month with ads alone often needs DAU around 6K-7K. Ad revenue has a hard ceiling.'
@@ -27,8 +49,8 @@ export default function ProblemSection({ locale }: ProblemSectionProps) {
           </Reveal>
           <Reveal>
             <div className="problem-card">
-              <span className="problem-icon"></span>
-              <h3>🔄  {isEn ? 'You are stuck at “what should be paid?”' : '"뭘 유료로 만들지"에서 멈췄다'}</h3>
+              <span className="problem-icon"><KeyIcon size={28} /></span>
+              <h3>  {isEn ? 'Pricing a monetization model is hard' : '수익모델 가격설정은 어려워요'}</h3>
               <p>
                 {isEn ? (
                   <>
@@ -44,8 +66,8 @@ export default function ProblemSection({ locale }: ProblemSectionProps) {
           </Reveal>
           <Reveal>
             <div className="problem-card">
-              <span className="problem-icon"></span>
-              <h3>🤹  {isEn ? 'You have multiple apps but no focus' : '앱이 여러 개인데 어디에 집중할지 모르겠다'}</h3>
+              <span className="problem-icon"><StackIcon size={28} /></span>
+              <h3>  {isEn ? '"Ship first and hope one works"' : '"되는 놈 하나 걸려라" 일단 만들고 봐요'}</h3>
               <p>
                 {isEn
                   ? 'You run 2-5 apps, but none breaks out. You have data, but no decision framework for what to scale or sunset.'
@@ -55,8 +77,8 @@ export default function ProblemSection({ locale }: ProblemSectionProps) {
           </Reveal>
           <Reveal>
             <div className="problem-card">
-              <span className="problem-icon"></span>
-              <h3>😶  {isEn ? 'You have nowhere to ask with context' : '물어볼 곳이 없다'}</h3>
+              <span className="problem-icon"><CommentIcon size={28} /></span>
+              <h3>  {isEn ? 'People around you only share success stories' : '주변에서는 자기 자랑만 해요'}</h3>
               <p>
                 {isEn ? (
                   <>
