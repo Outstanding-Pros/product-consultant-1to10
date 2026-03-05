@@ -547,11 +547,14 @@ body::before {
 }
 
 .keyshot-frame {
+  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 16px;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 70%, transparent 100%);
 }
 
 .keyshot-frame-top {
@@ -573,6 +576,13 @@ body::before {
 
 .keyshot-image-wrap {
   min-height: 520px;
+  position: relative;
+}
+
+.keyshot-image-wrap img {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .keyshot-image {
@@ -580,6 +590,7 @@ body::before {
   height: 100%;
   display: block;
   object-fit: cover;
+  object-position: left top;
 }
 
 @media (prefers-color-scheme: light) {
@@ -1039,8 +1050,9 @@ body::before {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+  text-align: center;
 }
-.faq-list { max-width: 720px; margin-top: 48px; }
+.faq-list { max-width: 720px; margin: 48px auto 0; text-align: left; }
 .faq-item { border-bottom: 1px solid var(--border); }
 .faq-question {
   width: 100%;

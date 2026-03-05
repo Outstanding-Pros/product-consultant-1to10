@@ -13,7 +13,7 @@ export default function FinalCta({ locale }: FinalCtaProps) {
       <div className="container">
         <Reveal>
           <h2>
-            {isEn ? 'Your own revenue strategy engine,' : '연쇄 창업가와 현직 PO의 경험이 담긴'}
+            {isEn ? 'Your own revenue strategy engine,' : '연쇄 창업가와 현직 PO의 역량이 담긴'}
             <br />
             {isEn ? 'built from serial founders and active POs.' : '나만의 수익 전략 엔진, Propel'}
           </h2>
