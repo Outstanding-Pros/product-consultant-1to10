@@ -27,42 +27,44 @@ export default function ComparisonSection({ locale }: ComparisonSectionProps) {
           </p>
         </Reveal>
         <Reveal>
-          <table className="comparison-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>{isEn ? 'Courses / YouTube' : '강의 / 유튜브'}</th>
-                <th>{isEn ? 'Community' : '커뮤니티'}</th>
-                <th>Propel</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{isEn ? 'Personalization' : '맞춤도'}</td>
-                <td className="dim">{isEn ? 'Generic framework' : '범용 프레임워크'}</td>
-                <td className="dim">{isEn ? 'One-off Q&A' : '일회성 질답'}</td>
-                <td>{isEn ? 'Analysis based on your app data' : '내 앱 데이터 기반 분석'}</td>
-              </tr>
-              <tr>
-                <td>{isEn ? 'Continuity' : '연속성'}</td>
-                <td className="dim">{isEn ? 'Watch and end' : '보고 끝'}</td>
-                <td className="dim">{isEn ? 'No context' : '맥락 없음'}</td>
-                <td>{isEn ? 'Remembers previous experiment results' : '이전 실험 결과를 기억'}</td>
-              </tr>
-              <tr>
-                <td>{isEn ? 'Execution' : '실행력'}</td>
-                <td className="dim">{isEn ? '“I get the theory, but...”' : '"이론은 알겠는데..."'}</td>
-                <td className="dim">{isEn ? '“It depends on the field.”' : '"분야마다 달라요"'}</td>
-                <td>{isEn ? '“Do this this week.”' : '"이번 주에 이걸 하세요"'}</td>
-              </tr>
-              <tr>
-                <td>{isEn ? 'Price' : '가격'}</td>
-                <td className="dim">{isEn ? 'KRW 200K-300K' : '20~30만원'}</td>
-                <td className="dim">{isEn ? 'Free' : '무료'}</td>
-                <td>{isEn ? 'From KRW 4,900' : '4,900원부터'}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="comparison-table-wrap">
+            <table className="comparison-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>{isEn ? 'Courses / YouTube' : '강의 / 유튜브'}</th>
+                  <th>{isEn ? 'Community' : '커뮤니티'}</th>
+                  <th>Propel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{isEn ? 'Personalization' : '맞춤도'}</td>
+                  <td className="dim">{isEn ? 'Generic framework' : '범용 프레임워크'}</td>
+                  <td className="dim">{isEn ? 'One-off Q&A' : '일회성 질답'}</td>
+                  <td>{isEn ? 'Analysis based on your app data' : '내 앱 데이터 기반 분석'}</td>
+                </tr>
+                <tr>
+                  <td>{isEn ? 'Continuity' : '연속성'}</td>
+                  <td className="dim">{isEn ? 'Watch and end' : '보고 끝'}</td>
+                  <td className="dim">{isEn ? 'No context' : '맥락 없음'}</td>
+                  <td>{isEn ? 'Remembers previous experiment results' : '이전 실험 결과를 기억'}</td>
+                </tr>
+                <tr>
+                  <td>{isEn ? 'Execution' : '실행력'}</td>
+                  <td className="dim">{isEn ? '“I get the theory, but...”' : '"이론은 알겠는데..."'}</td>
+                  <td className="dim">{isEn ? '“It depends on the field.”' : '"분야마다 달라요"'}</td>
+                  <td>{isEn ? '“Do this this week.”' : '"이번 주에 이걸 하세요"'}</td>
+                </tr>
+                <tr>
+                  <td>{isEn ? 'Price' : '가격'}</td>
+                  <td className="dim">{isEn ? 'KRW 200K-300K' : '20~30만원'}</td>
+                  <td className="dim">{isEn ? 'Free' : '무료'}</td>
+                  <td>{isEn ? 'From KRW 4,900' : '4,900원부터'}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </Reveal>
       </div>
     </section>
