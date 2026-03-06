@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { type Locale } from '@/i18n/locale'
 
 type Plan = 'basic' | 'pro'
@@ -14,9 +15,9 @@ type PostPaymentIntakeFormProps = {
 }
 
 export default function PostPaymentIntakeForm({ locale, plan, provider, orderId }: PostPaymentIntakeFormProps) {
+  const router = useRouter()
   const isEn = locale === 'en'
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isDone, setIsDone] = useState(false)
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -52,8 +53,7 @@ export default function PostPaymentIntakeForm({ locale, plan, provider, orderId 
       return
     }
 
-    setIsDone(true)
-    form.reset()
+    router.push(locale === 'en' ? '/intake/success?lang=en' : '/intake/success?lang=ko')
   }
 
   return (
@@ -72,10 +72,6 @@ export default function PostPaymentIntakeForm({ locale, plan, provider, orderId 
         </p>
 
         <div className="modal" style={{ margin: '0 auto' }}>
-          {isDone ? (
-            <p className="modal-sub">{isEn ? 'Submitted successfully. We will contact you by email shortly.' : '정상 제출되었습니다. 이메일로 빠르게 안내드리겠습니다.'}</p>
-          ) : null}
-
           <form onSubmit={onSubmit}>
             <div className="form-group">
               <label className="form-label">{isEn ? 'Service name' : '서비스 이름'} <span className="required">*</span></label>
