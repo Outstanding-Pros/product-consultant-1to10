@@ -4,19 +4,30 @@ import Reveal from './Reveal'
 import { type Locale } from '@/i18n/locale'
 
 type Plan = 'basic' | 'pro'
+type BillingCountry = 'KR' | 'INTL'
 
 type PricingAndModalProps = {
   locale: Locale
+}
+
+type CheckoutResponse = {
+  checkoutUrl: string
+  provider: 'payapp' | 'polar'
 }
 
 export default function PricingAndModal({ locale }: PricingAndModalProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [plan, setPlan] = useState<Plan>('basic')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [billingCountry, setBillingCountry] = useState<BillingCountry>(locale === 'ko' ? 'KR' : 'INTL')
+  const [payerEmail, setPayerEmail] = useState('')
+  const [payerPhone, setPayerPhone] = useState('')
   const isEn = locale === 'en'
 
   function openModal(p: Plan) {
     setPlan(p)
+    setBillingCountry(locale === 'ko' ? 'KR' : 'INTL')
+    setPayerPhone('')
     setIsOpen(true)
   }
 
@@ -34,20 +45,39 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [isOpen])
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleCheckoutSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setIsSubmitting(true)
-    setTimeout(() => {
-      alert(
-        isEn
-          ? 'Thank you! Redirecting to payment page.\n\n(You will be redirected to Polar.sh checkout.)'
-          : '감사합니다! 결제 페이지로 이동합니다.\n\n(Polar.sh 결제 페이지로 연결됩니다)'
-      )
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          locale,
+          plan,
+          billingCountry,
+          payerEmail,
+          payerPhone,
+        }),
+      })
+
+      if (!response.ok) {
+        const message = isEn ? 'Failed to create checkout session.' : '결제 세션 생성에 실패했습니다.'
+        throw new Error(message)
+      }
+
+      const data = (await response.json()) as CheckoutResponse
+      window.location.href = data.checkoutUrl
+    } catch {
+      alert(isEn ? 'Payment connection failed. Please try again.' : '결제 연결에 실패했습니다. 다시 시도해주세요.')
       setIsSubmitting(false)
-    }, 1000)
+    }
   }
 
   const isPro = plan === 'pro'
@@ -56,14 +86,14 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
     <>
       <section className="section" id="pricing">
         <div className="container">
-            <Reveal><span className="section-label">PRICING</span></Reveal>
-            <Reveal>
+          <Reveal><span className="section-label">PRICING</span></Reveal>
+          <Reveal>
             <h2 className="comparison-heading">
-              {isEn 
-              ? <>Prepay now,<br />and get your plan <span className="highlight">50%</span> cheaper</>
-              : <>지금 사전 결제하면,<br /> 원하는 플랜이 <span className="highlight">50%</span> 저렴해요</>}
+              {isEn
+                ? <>Prepay now,<br />and get your plan <span className="highlight">50%</span> cheaper</>
+                : <>지금 사전 결제하면,<br /> 원하는 플랜이 <span className="highlight">50%</span> 저렴해요</>}
             </h2>
-            </Reveal>
+          </Reveal>
 
           <Reveal>
             <p className="comparison-sub">
@@ -91,7 +121,6 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                   <li>{isEn ? 'Benchmark core comparison' : 'Benchmark 핵심 비교 지표'}</li>
                   <li>{isEn ? 'Business Model top recommendations' : 'Business Model 상위 추천안'}</li>
                   <li>{isEn ? '1-month Sprint plan (template)' : 'Sprint 1개월 실행안 (기본 템플릿)'}</li>
-                  
                 </ul>
                 <button className="btn-secondary" onClick={() => openModal('basic')}>
                   {isEn ? (
@@ -146,124 +175,81 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
 
       <div
         className={`modal-overlay${isOpen ? ' active' : ''}`}
-        onClick={(e) => { if (e.target === e.currentTarget) closeModal() }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) closeModal()
+        }}
       >
         <div className="modal">
           <button className="modal-close" onClick={closeModal}>×</button>
-          <h2>{isEn ? '📊 Dashboard Setup Form' : '📊 대시보드 세팅 폼'}</h2>
-          <p className="modal-sub">{isEn ? 'Takes about 3 minutes. Better inputs make better dashboard output.' : '약 3분 소요됩니다. 정확한 입력일수록 더 좋은 대시보드 결과를 제공합니다.'}</p>
-          <form onSubmit={handleSubmit}>
+          <h2>{isEn ? 'Payment First' : '결제를 먼저 진행하세요'}</h2>
+          <p className="modal-sub">
+            {isEn
+              ? 'Step 1) Complete payment. Step 2) Fill intake form on the success page.'
+              : '1) 결제 완료 후 2) 성공 페이지에서 양식 폼을 작성합니다.'}
+          </p>
+          <form onSubmit={handleCheckoutSubmit}>
             <div className="form-group">
-              <label className="form-label">{isEn ? 'Service name' : '서비스 이름'} <span className="required">*</span></label>
-              <input type="text" className="form-input" placeholder={isEn ? 'e.g. Discussion Board' : '예: 토론철'} required />
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">{isEn ? 'Platform' : '플랫폼'} <span className="required">*</span></label>
-                <select className="form-select" required defaultValue="">
-                  <option value="" disabled>{isEn ? 'Select' : '선택'}</option>
-                  <option>Android</option>
-                  <option>iOS</option>
-                  <option>Android + iOS</option>
-                  <option>{isEn ? 'Web' : '웹'}</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">{isEn ? 'Category' : '카테고리'} <span className="required">*</span></label>
-                <select className="form-select" required defaultValue="">
-                  <option value="" disabled>{isEn ? 'Select' : '선택'}</option>
-                  <option>{isEn ? 'Utility' : '유틸리티'}</option>
-                  <option>{isEn ? 'Lifestyle' : '라이프스타일'}</option>
-                  <option>{isEn ? 'Productivity' : '생산성'}</option>
-                  <option>{isEn ? 'Game' : '게임'}</option>
-                  <option>{isEn ? 'Education' : '교육'}</option>
-                  <option>{isEn ? 'Health / Fitness' : '건강/피트니스'}</option>
-                  <option>{isEn ? 'Social' : '소셜'}</option>
-                  <option>{isEn ? 'Others' : '기타'}</option>
-                </select>
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">DAU ({isEn ? 'daily avg' : '일 평균'}) <span className="required">*</span></label>
-                <input type="text" className="form-input" placeholder={isEn ? 'e.g. 2500' : '예: 2500'} required />
-              </div>
-              <div className="form-group">
-                <label className="form-label">MAU ({isEn ? 'monthly avg' : '월 평균'})</label>
-                <input type="text" className="form-input" placeholder={isEn ? 'e.g. 12000' : '예: 12000'} />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">{isEn ? 'Current monetization model' : '현재 수익 모델'} <span className="required">*</span></label>
-                <select className="form-select" required defaultValue="">
-                  <option value="" disabled>{isEn ? 'Select' : '선택'}</option>
-                  <option>{isEn ? 'AdMob (Banner/Interstitial)' : 'AdMob (배너/전면)'}</option>
-                  <option>{isEn ? 'AdMob + Rewarded Ads' : 'AdMob + 보상형'}</option>
-                  <option>{isEn ? 'In-app purchase' : '인앱결제'}</option>
-                  <option>{isEn ? 'Subscription' : '구독'}</option>
-                  <option>{isEn ? 'Ads + In-app purchase mix' : '광고 + 인앱결제 혼합'}</option>
-                  <option>{isEn ? 'No monetization model yet' : '수익 모델 없음'}</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">{isEn ? 'Monthly revenue' : '월 수익'} <span className="required">*</span></label>
-                <input type="text" className="form-input" placeholder={isEn ? 'e.g. USD 300' : '예: 40만원'} required />
-              </div>
-            </div>
-            <div className="form-group">
-              <label className="form-label">{isEn ? 'Number of apps you operate' : '운영 중인 앱 개수'}</label>
-              <select className="form-select" defaultValue="">
-                <option value="" disabled>{isEn ? 'Select' : '선택'}</option>
-                <option>{isEn ? '1 app' : '1개'}</option>
-                <option>{isEn ? '2-3 apps' : '2~3개'}</option>
-                <option>{isEn ? '4-5 apps' : '4~5개'}</option>
-                <option>{isEn ? '6+ apps' : '6개 이상'}</option>
+              <label className="form-label">{isEn ? 'Billing region' : '결제 지역'} <span className="required">*</span></label>
+              <select
+                className="form-select"
+                value={billingCountry}
+                onChange={(e) => setBillingCountry(e.target.value as BillingCountry)}
+                required
+              >
+                <option value="KR">{isEn ? 'Korea (PayApp)' : '국내 (PayApp)'}</option>
+                <option value="INTL">{isEn ? 'International / US (Polar.sh)' : '해외 / 미국 (Polar.sh)'}</option>
               </select>
             </div>
+
             <div className="form-group">
-              <label className="form-label">{isEn ? 'Target monthly revenue' : '목표 월 수익'}</label>
-              <input type="text" className="form-input" placeholder={isEn ? 'e.g. USD 1,000' : '예: 150만원'} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">{isEn ? 'Biggest challenge right now' : '가장 고민되는 것'} <span className="required">*</span></label>
-              <textarea
-                className="form-textarea"
-                placeholder={
-                  isEn
-                    ? 'e.g. Need a clear paid feature strategy / not sure which app to prioritize in my portfolio'
-                    : '예: 어떤 기능을 유료화할지 모르겠어요 / 앱 포트폴리오에서 어떤 앱에 집중해야 할지 모르겠어요'
-                }
+              <label className="form-label">{isEn ? 'Email for receipt' : '영수증 수신 이메일'} <span className="required">*</span></label>
+              <input
+                type="email"
+                className="form-input"
+                placeholder="example@gmail.com"
+                value={payerEmail}
+                onChange={(e) => setPayerEmail(e.target.value)}
                 required
               />
             </div>
-            <div className="form-group">
-              <label className="form-label">{isEn ? 'Email (for dashboard access)' : '이메일 (대시보드 안내 수신용)'} <span className="required">*</span></label>
-              <input type="email" className="form-input" placeholder="example@gmail.com" required />
-            </div>
+
+            {billingCountry === 'KR' ? (
+              <div className="form-group">
+                <label className="form-label">{isEn ? 'Phone number for PayApp' : '페이앱 결제용 휴대폰 번호'} <span className="required">*</span></label>
+                <input
+                  type="tel"
+                  className="form-input"
+                  placeholder={isEn ? 'e.g. 01012345678' : '예: 01012345678'}
+                  value={payerPhone}
+                  onChange={(e) => setPayerPhone(e.target.value)}
+                  required
+                />
+              </div>
+            ) : null}
+
             <div className="form-submit">
               <button type="submit" className="btn-primary-full" disabled={isSubmitting}>
                 {isSubmitting
                   ? isEn
-                    ? 'Processing...'
-                    : '처리 중...'
+                    ? 'Redirecting...'
+                    : '이동 중...'
                   : isPro
                     ? isEn
-                      ? 'Pay and start Pro dashboard'
-                      : '결제하고 Pro 대시보드 시작'
+                      ? 'Pay Pro and Continue'
+                      : 'Pro 결제하고 계속하기'
                     : isEn
-                      ? 'Pay and start Basic dashboard'
-                      : '결제하고 Basic 대시보드 시작'}
+                      ? 'Pay Basic and Continue'
+                      : 'Basic 결제하고 계속하기'}
               </button>
             </div>
             <p className="form-price-note">
               {isPro
                 ? isEn
-                  ? 'Pro · $40 / month · All features unlocked · Pre-launch 1+1'
-                  : 'Pro · 59,000원 ($40) / 월 · 전 기능 제공 · 사전신청 1+1'
+                  ? 'Pro · $40 / month · prepay sale 50%'
+                  : 'Pro · 59,000원 / 월 · 사전결제 50% 할인'
                 : isEn
-                  ? 'Basic · $14 · Core dashboard modules'
-                  : 'Basic · 19,000원 ($14) · 핵심 대시보드 모듈'}
+                  ? 'Basic · $14 / month · prepay sale 50%'
+                  : 'Basic · 19,000원 / 월 · 사전결제 50% 할인'}
             </p>
           </form>
         </div>

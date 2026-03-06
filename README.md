@@ -37,6 +37,16 @@ TOSS_SECRET_KEY=test_sk_your_secret_key_here
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
+현재 코드 기준 최신 환경변수 템플릿은 [`.env.example`](./.env.example) 를 우선 참고하세요.
+
+### 2-1. Supabase 스키마 적용
+
+Supabase SQL Editor에서 아래 파일을 실행해 `orders`, `intake_forms` 테이블을 생성하세요.
+
+```bash
+docs/supabase-schema.sql
+```
+
 #### Polar.sh 설정 방법:
 
 1. [Polar.sh](https://polar.sh/)에 가입 및 로그인

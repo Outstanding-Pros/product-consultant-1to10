@@ -185,7 +185,7 @@ export default function Footer({ locale }: FooterProps) {
         <p>
           © 2026 Propel &nbsp;·&nbsp;{' '}
           <button className="footer-link-btn" onClick={handleCopyEmail}>
-            {isEn ? 'Contact' : '문의하기'}
+            {isEn ? 'Contact: contact@outstanding-pros.xyz' : '문의하기: contact@outstanding-pros.xyz'}
           </button>
           {isEmailCopied ? <span className="footer-copy-hint">{isEn ? 'Copied' : '복사됨'}</span> : null}
           &nbsp;·&nbsp;{' '}
