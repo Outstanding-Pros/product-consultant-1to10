@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { insertIntakeForm, updateOrderById } from '@/lib/supabaseAdmin'
+import { getOrderById, insertIntakeForm, updateOrderById } from '@/lib/supabaseAdmin'
 
 type IntakePayload = {
   orderId?: string
@@ -26,6 +26,27 @@ export async function POST(request: NextRequest) {
   const locale = body.locale === 'en' ? 'en' : 'ko'
   const plan = body.plan === 'pro' ? 'pro' : 'basic'
   const provider = body.provider === 'payapp' || body.provider === 'polar' ? body.provider : 'unknown'
+
+  const order = await getOrderById(orderId)
+  if (!order) {
+    return NextResponse.json({ error: 'Order not found.' }, { status: 404 })
+  }
+
+  if (order.status !== 'paid') {
+    return NextResponse.json({ error: 'Payment is not completed yet.' }, { status: 409 })
+  }
+
+  if (provider !== 'unknown' && order.provider !== provider) {
+    return NextResponse.json({ error: 'Provider mismatch for order.' }, { status: 400 })
+  }
+
+  if (order.plan !== plan) {
+    return NextResponse.json({ error: 'Plan mismatch for order.' }, { status: 400 })
+  }
+
+  if (order.locale !== locale) {
+    return NextResponse.json({ error: 'Locale mismatch for order.' }, { status: 400 })
+  }
 
   try {
     await insertIntakeForm({

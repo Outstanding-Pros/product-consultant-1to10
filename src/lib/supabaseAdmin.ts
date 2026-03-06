@@ -31,6 +31,15 @@ type IntakeInsert = {
   contact_email: string
 }
 
+type OrderRow = {
+  id: string
+  provider: 'payapp' | 'polar'
+  plan: 'basic' | 'pro'
+  locale: 'ko' | 'en'
+  payer_email: string
+  status: OrderStatus
+}
+
 function assertConfig() {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env.')
@@ -76,6 +85,18 @@ export async function insertOrder(input: OrderInsert): Promise<{ id: string }> {
   }
 
   return first
+}
+
+export async function getOrderById(orderId: string): Promise<OrderRow | null> {
+  const params = new URLSearchParams({
+    id: `eq.${orderId}`,
+    select: 'id,provider,plan,locale,payer_email,status',
+    limit: '1',
+  })
+  const rows = await requestSupabase<OrderRow[]>(`/orders?${params.toString()}`, {
+    method: 'GET',
+  })
+  return rows[0] ?? null
 }
 
 export async function updateOrderById(orderId: string, updates: Record<string, Json>): Promise<void> {

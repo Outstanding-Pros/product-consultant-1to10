@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { insertOrder, updateOrderById } from '@/lib/supabaseAdmin'
+import { Polar } from '@polar-sh/sdk'
 
 type Plan = 'basic' | 'pro'
 type BillingCountry = 'KR' | 'INTL'
@@ -15,14 +16,6 @@ type CheckoutPayload = {
 
 function pickProvider(billingCountry: BillingCountry): Provider {
   return billingCountry === 'KR' ? 'payapp' : 'polar'
-}
-
-function withParams(baseUrl: string, params: Record<string, string>): string {
-  const url = new URL(baseUrl)
-  Object.entries(params).forEach(([key, value]) => {
-    if (value) url.searchParams.set(key, value)
-  })
-  return url.toString()
 }
 
 function getAppUrl(request: NextRequest): string {
@@ -116,26 +109,40 @@ async function payappCheckoutUrl({
   return payurl
 }
 
-function polarCheckoutUrl(
+async function polarCheckoutUrl(
   plan: Plan,
   appUrl: string,
   locale: 'ko' | 'en',
   payerEmail: string,
   orderId: string
-): string | null {
-  const byPlan = plan === 'pro' ? process.env.POLAR_CHECKOUT_URL_PRO : process.env.POLAR_CHECKOUT_URL_BASIC
-  const baseUrl = byPlan ?? process.env.POLAR_CHECKOUT_URL
+): Promise<string | null> {
+  const accessToken = process.env.POLAR_ACCESS_TOKEN
+  const productId = plan === 'pro' ? process.env.POLAR_PRODUCT_ID_PRO : process.env.POLAR_PRODUCT_ID_BASIC
 
-  if (!baseUrl) return null
+  if (!accessToken || !productId) {
+    return null
+  }
 
-  return withParams(baseUrl, {
-    plan,
+  const server = process.env.POLAR_SERVER === 'sandbox' ? 'sandbox' : 'production'
+  const polar = new Polar({ accessToken, server })
+
+  const checkout = await polar.checkouts.create({
+    products: [productId],
+    customerEmail: payerEmail,
     locale,
-    email: payerEmail,
-    success_url: `${appUrl}/checkout/success?provider=polar&plan=${plan}&lang=${locale}&order_id=${orderId}`,
-    cancel_url: `${appUrl}/checkout/cancel?provider=polar&plan=${plan}&lang=${locale}&order_id=${orderId}`,
-    order_id: orderId,
+    successUrl: `${appUrl}/checkout/success?provider=polar&plan=${plan}&lang=${locale}&order_id=${orderId}`,
+    returnUrl: `${appUrl}/checkout/cancel?provider=polar&plan=${plan}&lang=${locale}&order_id=${orderId}`,
+    metadata: {
+      order_id: orderId,
+      plan,
+      locale,
+      billing_country: 'INTL',
+      payer_email: payerEmail,
+      source: 'landing_pricing_modal',
+    },
   })
+
+  return checkout.url
 }
 
 export async function POST(request: NextRequest) {
@@ -183,7 +190,7 @@ export async function POST(request: NextRequest) {
     checkoutUrl =
       provider === 'payapp'
         ? await payappCheckoutUrl({ plan, appUrl, locale, payerEmail, payerPhone, orderId })
-        : polarCheckoutUrl(plan, appUrl, locale, payerEmail, orderId)
+        : await polarCheckoutUrl(plan, appUrl, locale, payerEmail, orderId)
   } catch (error) {
     await updateOrderById(orderId, { status: 'failed' })
     const message = error instanceof Error ? error.message : 'Checkout request failed.'
@@ -191,10 +198,16 @@ export async function POST(request: NextRequest) {
   }
 
   if (!checkoutUrl) {
+    try {
+      await updateOrderById(orderId, { status: 'failed' })
+    } catch (error) {
+      console.error('[checkout] failed to update order status', error)
+    }
+
     const missing =
       provider === 'payapp'
         ? 'PAYAPP_USER_ID (and valid payerPhone)'
-        : 'POLAR_CHECKOUT_URL(_BASIC/_PRO)'
+        : 'POLAR_ACCESS_TOKEN + POLAR_PRODUCT_ID_BASIC/PRO'
     return NextResponse.json(
       { error: `Missing checkout URL env for ${provider}. Set ${missing}.` },
       { status: 500 }

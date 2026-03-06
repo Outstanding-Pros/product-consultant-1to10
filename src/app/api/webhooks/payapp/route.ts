@@ -5,7 +5,11 @@ export async function POST(request: NextRequest) {
   const expectedToken = process.env.PAYAPP_FEEDBACK_TOKEN
   const incomingToken = request.nextUrl.searchParams.get('token')
 
-  if (expectedToken && incomingToken !== expectedToken) {
+  if (!expectedToken) {
+    return NextResponse.json({ error: 'Missing PAYAPP_FEEDBACK_TOKEN env.' }, { status: 500 })
+  }
+
+  if (incomingToken !== expectedToken) {
     return NextResponse.json({ error: 'Invalid webhook token.' }, { status: 401 })
   }
 
