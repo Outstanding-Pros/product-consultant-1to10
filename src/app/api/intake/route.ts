@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getOrderById, insertIntakeForm, updateOrderById } from '@/lib/supabaseAdmin'
+import { getOrderById, upsertIntakeForm, updateOrderById } from '@/lib/supabaseAdmin'
 
 type IntakePayload = {
   orderId?: string
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    await insertIntakeForm({
+    await upsertIntakeForm({
       order_id: orderId,
       locale,
       plan,

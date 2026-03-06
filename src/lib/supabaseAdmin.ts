@@ -122,9 +122,12 @@ export async function updateOrderByProviderRef(
   })
 }
 
-export async function insertIntakeForm(input: IntakeInsert): Promise<void> {
-  await requestSupabase('/intake_forms', {
+export async function upsertIntakeForm(input: IntakeInsert): Promise<void> {
+  await requestSupabase('/intake_forms?on_conflict=order_id', {
     method: 'POST',
+    headers: {
+      Prefer: 'resolution=merge-duplicates',
+    },
     body: JSON.stringify(input),
   })
 }
