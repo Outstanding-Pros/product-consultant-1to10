@@ -14,12 +14,12 @@ export default async function IntakeSuccessPage({ searchParams }: IntakeSuccessP
     <section className="section">
       <div className="container" style={{ textAlign: 'center' }}>
         <h1 className="comparison-heading">
-          {isEn ? 'Submitted successfully.' : '정상 제출되었습니다.'}
+          {isEn ? 'Thank you for your early access.' : '사전 결제 감사드립니다.'}
         </h1>
-        <p className="comparison-sub">
+        <p className="comparison-sub" style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
           {isEn
-            ? 'We will review your information and contact you by email.'
-            : '입력해주신 내용을 검토한 뒤 이메일로 안내드리겠습니다.'}
+            ? <>We are planning to launch the beta version around the beginning of April.<br />We'll make sure you're the first to know.<br /> We’ll reach out via email with more updates soon!</>
+            : <>베타 서비스 출시는 약 4월 초 예정입니다.<br />새로운 소식이 나오는 대로 가장 먼저 이메일로 공유해 드릴 예정이니,<br /> 조금만 기다려 주세요!</>}
         </p>
         <Link href={locale === 'en' ? '/?lang=en' : '/'} className="btn-primary">
           {isEn ? 'Back to Home' : '홈으로 이동'}
