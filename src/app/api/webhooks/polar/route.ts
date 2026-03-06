@@ -1,20 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { validateEvent, WebhookVerificationError } from '@polar-sh/sdk/webhooks'
 import { updateOrderById, updateOrderByProviderRef } from '@/lib/supabaseAdmin'
 
 export async function POST(request: NextRequest) {
-  const expectedToken = process.env.POLAR_WEBHOOK_TOKEN
-  const incomingToken = request.headers.get('x-webhook-token')
+  const webhookSecret = process.env.POLAR_WEBHOOK_SECRET
 
-  if (expectedToken && incomingToken !== expectedToken) {
-    return NextResponse.json({ error: 'Invalid webhook token.' }, { status: 401 })
+  if (!webhookSecret) {
+    return NextResponse.json({ error: 'Missing POLAR_WEBHOOK_SECRET env.' }, { status: 500 })
   }
 
   const rawBody = await request.text()
-  let payload: Record<string, unknown> = {}
+
+  const headerRecord = Object.fromEntries(request.headers.entries())
+  let payload: Record<string, unknown>
   try {
-    payload = JSON.parse(rawBody) as Record<string, unknown>
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON payload.' }, { status: 400 })
+    payload = validateEvent(rawBody, headerRecord, webhookSecret) as Record<string, unknown>
+  } catch (error) {
+    if (error instanceof WebhookVerificationError) {
+      return NextResponse.json({ error: 'Invalid webhook signature.' }, { status: 403 })
+    }
+    return NextResponse.json({ error: 'Invalid webhook payload.' }, { status: 400 })
   }
 
   const eventType = String(payload.type ?? payload.event ?? '')
@@ -50,7 +55,6 @@ export async function POST(request: NextRequest) {
     console.error('[webhook][polar] db update failed', error)
   }
 
-  // TODO: Verify Polar signature with official method before production use.
   console.log('[webhook][polar] received', { eventType, providerOrderId, orderId })
 
   return NextResponse.json({ ok: true })

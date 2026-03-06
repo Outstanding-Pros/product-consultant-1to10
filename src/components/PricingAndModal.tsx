@@ -21,12 +21,15 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [billingCountry, setBillingCountry] = useState<BillingCountry>(locale === 'ko' ? 'KR' : 'INTL')
   const [payerEmail, setPayerEmail] = useState('')
+  const [payerEmailConfirm, setPayerEmailConfirm] = useState('')
   const [payerPhone, setPayerPhone] = useState('')
   const isEn = locale === 'en'
 
   function openModal(p: Plan) {
     setPlan(p)
     setBillingCountry(locale === 'ko' ? 'KR' : 'INTL')
+    setPayerEmail('')
+    setPayerEmailConfirm('')
     setPayerPhone('')
     setIsOpen(true)
   }
@@ -52,6 +55,12 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
 
   async function handleCheckoutSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
+    if (payerEmail.trim() !== payerEmailConfirm.trim()) {
+      alert(isEn ? 'Emails do not match. Please check again.' : '이메일이 일치하지 않습니다. 다시 확인해주세요.')
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
@@ -81,6 +90,7 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
   }
 
   const isPro = plan === 'pro'
+  const isEmailMatched = payerEmail.trim() !== '' && payerEmail.trim() === payerEmailConfirm.trim()
 
   return (
     <>
@@ -212,6 +222,22 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                 required
               />
             </div>
+            <div className="form-group">
+              <label className="form-label">{isEn ? 'Confirm email' : '이메일 확인'} <span className="required">*</span></label>
+              <input
+                type="email"
+                className="form-input"
+                placeholder="example@gmail.com"
+                value={payerEmailConfirm}
+                onChange={(e) => setPayerEmailConfirm(e.target.value)}
+                required
+              />
+              {payerEmailConfirm && !isEmailMatched ? (
+                <p className="form-price-note" style={{ color: 'var(--danger)', marginTop: 8 }}>
+                  {isEn ? 'Emails must match.' : '이메일이 서로 같아야 합니다.'}
+                </p>
+              ) : null}
+            </div>
 
             {billingCountry === 'KR' ? (
               <div className="form-group">
@@ -228,7 +254,7 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
             ) : null}
 
             <div className="form-submit">
-              <button type="submit" className="btn-primary-full" disabled={isSubmitting}>
+              <button type="submit" className="btn-primary-full" disabled={isSubmitting || !isEmailMatched}>
                 {isSubmitting
                   ? isEn
                     ? 'Redirecting...'
