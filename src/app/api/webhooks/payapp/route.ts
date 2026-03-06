@@ -19,29 +19,36 @@ export async function POST(request: NextRequest) {
   const state = form.get('state') ?? ''
   const orderId = form.get('var1') ?? ''
   const plan = form.get('var2') ?? ''
+  const result = form.get('result') ?? ''
+  const status = form.get('status') ?? ''
 
   try {
-    if (state === '1') {
+    // PayApp feedbackurl is sent on completed payment.
+    // Treat callback with mul_no as paid unless explicit failure code exists.
+    const explicitlyFailed = state === '0' || result.toLowerCase() === 'fail' || status.toLowerCase() === 'fail'
+    const paidSignal = Boolean(paymentRef) && !explicitlyFailed
+
+    if (paidSignal) {
       if (orderId) {
         await updateOrderById(orderId, {
           status: 'paid',
-          provider_order_id: paymentRef || null,
+          provider_order_id: paymentRef,
           paid_at: new Date().toISOString(),
         })
-      } else if (paymentRef) {
+      } else {
         await updateOrderByProviderRef('payapp', paymentRef, {
           status: 'paid',
           paid_at: new Date().toISOString(),
         })
       }
-    } else if (orderId) {
+    } else if (explicitlyFailed && orderId) {
       await updateOrderById(orderId, { status: 'failed' })
     }
   } catch (error) {
     console.error('[webhook][payapp] db update failed', error)
   }
 
-  console.log('[webhook][payapp] received', { paymentRef, state, orderId, plan })
+  console.log('[webhook][payapp] received', { paymentRef, state, result, status, orderId, plan })
 
   // PayApp feedbackurl must return success response without redirect.
   return new NextResponse('OK', { status: 200 })
