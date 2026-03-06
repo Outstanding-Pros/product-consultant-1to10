@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Order not found.' }, { status: 404 })
   }
 
-  if (order.status !== 'paid') {
-    return NextResponse.json({ error: 'Payment is not completed yet.' }, { status: 409 })
+  if (order.status === 'failed' || order.status === 'refunded') {
+    return NextResponse.json({ error: 'Order is not eligible for intake submission.' }, { status: 409 })
   }
 
   if (provider !== 'unknown' && order.provider !== provider) {
@@ -69,5 +69,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: message }, { status: 500 })
   }
 
-  return NextResponse.json({ ok: true, orderId })
+  return NextResponse.json({
+    ok: true,
+    orderId,
+    paymentStatus: order.status,
+  })
 }
