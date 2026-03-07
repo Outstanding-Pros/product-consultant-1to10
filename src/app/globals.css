@@ -1176,7 +1176,7 @@ body::before {
   padding: 40px 24px;
   border-top: 1px solid var(--border);
   text-align: center;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-muted);
 }
 .footer a { color: var(--text-secondary); text-decoration: none; }
@@ -1193,7 +1193,7 @@ body::before {
 .footer-copy-hint {
   display: inline-block;
   margin-left: 8px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--accent);
 }
 
