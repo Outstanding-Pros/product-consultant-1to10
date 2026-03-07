@@ -11,7 +11,7 @@ const faqsByLocale = {
   ko: [
     {
       question: 'ChatGPT에 물어보면 되는 거 아닌가요?',
-      answer: 'LLM 챗봇은 대화형 답변에 강하지만, 분석 결과가 실행 플랜으로 구조화되지는 않습니다. Propel은 Analytics -> Market -> Benchmark -> Business Model -> Sprint -> Roadmap 흐름이 연결된 대시보드를 제공합니다.',
+      answer: "질문을 잘해야 답을 주는 AI와 달리, Propel은 전직 PO·그로스팀의 실무 노하우를 프레임워크에 그대로 담았습니다. 기존의 프롬프트 설계에 쓸 시간을 제품의 성장에만 집중할 수 있게 만드는 것, 그것이 Propel의 목표입니다."
     },
     {
       question: '수익 예측은 어떤 근거로 나오나요?',
@@ -33,7 +33,7 @@ const faqsByLocale = {
   en: [
     {
       question: "Why not just ask ChatGPT?",
-      answer: 'LLM chatbots are great at conversational answers, but they usually do not enforce an execution workflow. Propel connects Analytics -> Market -> Benchmark -> Business Model -> Sprint -> Roadmap in one dashboard.',
+      answer: 'Unlike AI, which depends on the quality of your prompts, Propel provides a proven roadmap built on the expertise of seasoned POs and Growth leads. Just follow our framework and fill in the blanks. Our goal is to help you spend less time engineering prompts and more time engineering growth.',
     },
     {
       question: 'What is the basis for the revenue forecast?',
