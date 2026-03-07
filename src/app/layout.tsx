@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Propel — DAU는 있는데 수익이 안 나오는 앱 개발자를 위한 맞춤형 수익화 전략',
+  title: 'Propel — 소규모 창업자를 위한 인디 앱 맞춤형 수익화 컨설팅 대시보드',
   description: '前 PO 출신 기획자가 설계한 인디 앱 맞춤형 수익화 컨설팅. 강의나 커뮤니티가 아닌, 당신의 앱 데이터에 기반한 구체적인 전략을 드립니다.',
 }
 

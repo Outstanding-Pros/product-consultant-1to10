@@ -61,6 +61,11 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
       return
     }
 
+    if (billingCountry === 'KR' && !isPhoneValid) {
+      alert(isEn ? 'Please enter a valid Korean mobile number (e.g. 01012345678).' : '올바른 휴대폰 번호를 입력해주세요. (예: 01012345678)')
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
@@ -91,6 +96,7 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
 
   const isPro = plan === 'pro'
   const isEmailMatched = payerEmail.trim() !== '' && payerEmail.trim() === payerEmailConfirm.trim()
+  const isPhoneValid = /^01[0-9]{9}$/.test(payerPhone.replace(/[^0-9]/g, ''))
 
   return (
     <>
@@ -250,11 +256,16 @@ export default function PricingAndModal({ locale }: PricingAndModalProps) {
                   onChange={(e) => setPayerPhone(e.target.value)}
                   required
                 />
+                {payerPhone && !isPhoneValid ? (
+                  <p className="form-price-note" style={{ color: 'var(--danger)', marginTop: 8 }}>
+                    {isEn ? 'Enter a valid mobile number (e.g. 01012345678).' : '올바른 휴대폰 번호를 입력해주세요. (예: 01012345678)'}
+                  </p>
+                ) : null}
               </div>
             ) : null}
 
             <div className="form-submit">
-              <button type="submit" className="btn-primary-full" disabled={isSubmitting || !isEmailMatched}>
+              <button type="submit" className="btn-primary-full" disabled={isSubmitting || !isEmailMatched || (billingCountry === 'KR' && !isPhoneValid)}>
                 {isSubmitting
                   ? isEn
                     ? 'Redirecting...'
